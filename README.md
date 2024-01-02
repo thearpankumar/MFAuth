@@ -23,6 +23,29 @@ This project focuses on implementing Multi-Factor Authentication (MFA) using var
 - **CSPRNG** A type of random number generator designed for cryptographic use, ensuring unpredictability and resistance to prediction or reproduction.
 
 
+## Install
+
+    
+    git clone https://github.com/Gaoh19/MFAuth.git
+    cd MFAuth
+  
+### TOTP
+
+    cd ImplementTOTP
+
+**For JavaScript TOTP:**
+    
+    npm install
+    npm run dev
+
+Use Insomia for testing Auth.
+
+**For Python:**
+
+    python pyTOTP.py
+
+Scan QR using Authenicator application for verification
+
 Thanks
 ------
 
