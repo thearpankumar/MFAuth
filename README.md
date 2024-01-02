@@ -23,8 +23,10 @@ This project focuses on implementing Multi-Factor Authentication (MFA) using var
 - **CSPRNG** A type of random number generator designed for cryptographic use, ensuring unpredictability and resistance to prediction or reproduction.
 
 
-## Conclusion
+Thanks
+------
 
-This README provides an overview of the Multi-Factor Authentication (MFA) implementation project. It covers the roadmap, authentication factors, social sign-in, TOTP, security features, and future improvements.
+Thanks to [Susam][PN] for helping me with TOTP Implementation. I referred to his TOTP implementation at [https://github.com/susam/mintotp/blob/main/mintotp.py][PNTOTP] while writing my own.
 
-Feel free to contribute to the project and help enhance the security of user authentication systems!
+[PN]: https://github.com/susam
+[PNTOTP]: https://github.com/susam/mintotp/blob/main/mintotp.py
