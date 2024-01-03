@@ -21,6 +21,8 @@ This project focuses on implementing Multi-Factor Authentication (MFA) using var
 - **OAuth:** Framework for secure authorization of third-party applications.
 - **RFC 6238** Internet Engineering Task Force (IETF) standard defining the Time-Based One-Time Password (TOTP) algorithm.
 - **CSPRNG** A type of random number generator designed for cryptographic use, ensuring unpredictability and resistance to prediction or reproduction.
+- **SHA-256**
+- **Aegis Authenticator**
 
 
 ## Install
@@ -42,7 +44,15 @@ Use Insomia for testing Auth.
 
 **For Python:**
 
-    python pyTOTP.py
+1. **Install Conda (Optional)**
+2. **Initialize Conda Env**
+3. **Import Dependencies**
+
+
+```
+pip install qrcode[pil]
+python pyTOTP.py
+```
 
 Scan QR using Authenicator application for verification
 
