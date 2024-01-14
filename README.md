@@ -23,6 +23,7 @@ This project focuses on implementing Multi-Factor Authentication (MFA) using var
 - **CSPRNG** A type of random number generator designed for cryptographic use, ensuring unpredictability and resistance to prediction or reproduction.
 - **SHA-256**
 - **Aegis Authenticator**
+- **React Framework** A front-end framework for user portal.
 
 
 ## Install
