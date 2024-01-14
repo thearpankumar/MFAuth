@@ -16,7 +16,7 @@ def HMAC(key, counter, digits=6, digest='sha256'):
 def TOTP(key, time_step=30, digits=6, digest='sha256'):
     return HMAC(key, int(time.time() / time_step), digits, digest)
 
-def generateQR(secret, app_name='qrTOTP', filename='./ImplementTOTP/qrcode.png', algorithm='sha256'):
+def generateQR(secret, app_name='qrTOTP', filename='qrcode.png', algorithm='sha256'):
     uri = f'otpauth://totp/{app_name}?secret={secret}&algorithm={algorithm.upper()}'
     img = qrcode.make(uri)
     img.save(filename)
