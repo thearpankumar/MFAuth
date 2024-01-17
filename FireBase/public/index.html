@@ -1,0 +1,879 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Multi-Factor Authentication [MFA]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f8b7b4db-6fc0-451d-a2f8-170b30277636" class="page sans"><header><h1 class="page-title">Multi-Factor Authentication [MFA]</h1><p class="page-description"></p></header><div class="page-body"><p id="ad2a088b-bd6a-442d-82d5-1e59c4617cfb" class=""><em>Date: 21st December 2023</em></p><p id="c2430cc6-da36-4074-971c-4d12c08dd315" class="">
+</p><p id="ad5adadd-efc7-4204-b08f-c5c6022d321a" class=""><mark class="highlight-red">The following project is the Implementation of Multi-Factor Authentication [MFA] as a part of Team Centinals SRM.   </mark>                                                                                                 </p><p id="e5fb2625-48de-4f01-9ce1-8f57c2fdab8c" class="">                                                                                                                   <em> Author : Abdur Rahman</em></p><p id="4abb0db1-6d69-4d94-a199-5b8d6ed020c9" class="">
+</p><h3 id="2fa37cd3-9716-4607-9c28-d4ed1814d97a" class="">Temp</h3><p id="6de22b02-ed6c-4bd7-81de-353624d813d8" class="">
+</p><p id="900fb5f8-2757-4fba-9b32-581b1a230534" class="">TTP-only cookies, secure cookies, and consider rotating session tokens regularly to prevent session hijacking.</p><p id="a3c2f2f9-4ea9-4814-9c48-2a99556039b9" class="">Time-based one-time password (<em><strong>TOTP</strong></em>)</p><p id="9334f47e-02c2-4325-8635-c1a0a4b1dd4c" class="">Centralized authentication services (like OAuth, OpenID Connect, or SSO solutions) can be employed to provide a seamless MFA experience across various domains.</p><p id="90dcf586-d79a-493b-b754-cf0692960b27" class="">
+</p><h3 id="9e06ac4d-a36d-405a-8e2f-589ea910a98f" class="">Initial Know-How</h3><p id="feff8e13-477f-4227-ba88-c5b6d0e65f6e" class="">
+</p><p id="08571ad7-3c73-426b-a5be-4c136c09c3bb" class="">Authentication factors can be categorized into different types based on what users provide to verify their identity. Here are the primary authentication factors:</p><ol type="1" id="6a32700a-81f0-4a63-9dec-01066ef2f31c" class="numbered-list" start="1"><li><strong>Knowledge Factors:</strong><ul id="2799a3e4-0128-4205-9912-0e020680623b" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Know:</strong><ul id="73904eea-a9a5-4f9c-8832-1b3eeca634f4" class="bulleted-list"><li style="list-style-type:circle">Passwords: Alphanumeric strings known only to the user.</li></ul><ul id="502e78f6-df0c-4c89-9c27-230aa1acd4b0" class="bulleted-list"><li style="list-style-type:circle">Personal Identification Numbers (PINs): Numeric codes, typically used with smart cards or ATMs.</li></ul></li></ul></li></ol><ol type="1" id="3ca01008-d7c6-4f42-b7fa-da8bb58eba51" class="numbered-list" start="2"><li><strong>Possession Factors:</strong><ul id="f1b54c2b-466c-45b9-ba95-0b8f3f24198b" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Have:</strong><ul id="9da4dc76-58f0-4fe7-9ecb-c7b5ab8c72f3" class="bulleted-list"><li style="list-style-type:circle">Security Tokens: Physical devices that generate one-time passwords (OTP) or codes.</li></ul><ul id="2201cda3-8845-4864-9190-0da2af012289" class="bulleted-list"><li style="list-style-type:circle">Smart Cards: Cards with embedded chips containing authentication information.</li></ul><ul id="5b88e128-b2c7-472f-b3c8-f8afcc3b5e52" class="bulleted-list"><li style="list-style-type:circle">Mobile Devices: Mobile apps or devices used to receive push notifications, SMS codes, or generate OTP.</li></ul></li></ul></li></ol><ol type="1" id="24fc51a9-1884-43ca-bfe3-8cc9d183dfe9" class="numbered-list" start="3"><li><strong>Biometric Factors:</strong><ul id="e1aaff48-d603-40ec-a437-2e2bdf07e542" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Are:</strong><ul id="a4aa6ac4-9abd-4ed5-9eec-4f5052a6f7b8" class="bulleted-list"><li style="list-style-type:circle">Fingerprint Recognition: Analyzing unique patterns in fingerprints.</li></ul><ul id="37fa7b97-0876-499e-aeda-7bf5ef8fd66d" class="bulleted-list"><li style="list-style-type:circle">Facial Recognition: Verifying identity based on facial features.</li></ul><ul id="5fd54881-824b-4381-aafb-2719936fc1b6" class="bulleted-list"><li style="list-style-type:circle">Iris Scans: Analyzing patterns in the colored part of the eye.</li></ul><ul id="b534ec95-6ba1-44a2-8508-8c9b2c8fcc02" class="bulleted-list"><li style="list-style-type:circle">Voice Recognition: Authenticating based on the unique characteristics of a person&#x27;s voice.</li></ul><ul id="743c0454-654a-4432-b67c-98c50d925d68" class="bulleted-list"><li style="list-style-type:circle">Behavioral Biometrics: Analyzing patterns of behavior, such as typing rhythm or mouse movement.</li></ul></li></ul></li></ol><ol type="1" id="23f25ea6-3368-4ba1-be63-060e6c27a03f" class="numbered-list" start="4"><li><strong>Location Factors:</strong><ul id="92edf052-a14d-47f0-b074-ed952b1867d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Somewhere You Are:</strong><ul id="bc2f9d8a-38ad-4908-98d4-9b5b8e67c3a8" class="bulleted-list"><li style="list-style-type:circle">Location-Based Authentication: Verifying a user&#x27;s identity based on their geographic location.</li></ul></li></ul></li></ol><ol type="1" id="a6855fa7-dfd3-4e8b-ac57-3fcc9faf3f45" class="numbered-list" start="5"><li><strong>Time Factors:</strong><ul id="79ac5558-437e-4ddd-bd23-f7ea913f673d" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Know and Time-Based:</strong><ul id="5f286072-eae4-4ff1-9c29-2261a5582fe0" class="bulleted-list"><li style="list-style-type:circle">Time-Based One-Time Passwords (TOTP): Codes generated based on the current time and a shared secret.</li></ul></li></ul></li></ol><ol type="1" id="d7086d80-277e-4973-960e-28d360975178" class="numbered-list" start="6"><li><strong>Action Factors:</strong><ul id="d5884b0e-04e3-4c9e-8c2b-4d803e6a5231" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Do:</strong><ul id="b74919d2-b69b-4e98-8dba-fe5f595880bd" class="bulleted-list"><li style="list-style-type:circle">Behavioral Biometrics: Analyzing patterns of behavior, such as typing rhythm or mouse movement.</li></ul></li></ul></li></ol><ol type="1" id="83819bfc-ca07-43ee-94d7-3e1265819ed2" class="numbered-list" start="7"><li><strong>Inheritance Factors:</strong><ul id="207d8038-667e-4c2e-97ff-226f04329bfe" class="bulleted-list"><li style="list-style-type:disc"><strong>Something You Inherit:</strong><ul id="d0c80be0-9b43-4b56-a817-e8e51bd65755" class="bulleted-list"><li style="list-style-type:circle">Genetic Biometrics: Analyzing genetic information for authentication.</li></ul></li></ul></li></ol><p id="2133ab31-18a6-4041-9d66-50671fa3e771" class="">It&#x27;s common to use a combination of these factors, known as multi-factor authentication (MFA), to enhance security. MFA requires users to provide two or more types of authentication factors during the authentication process, making it more difficult for unauthorized individuals to gain access. The specific factors used depend on the security requirements of the system and the level of assurance needed for user authentication.</p><p id="da5852bd-f405-46e9-9f67-001353bed472" class="">
+</p><p id="9d822ab2-1305-400e-9081-87896022f920" class=""><em><strong>Potential RoadMap:</strong></em></p><p id="503bf905-d8bc-44e7-bf45-f57584d9ca9f" class="">
+</p><ol type="1" id="3cf55ab5-cb6a-43a2-a5c9-668e8e646d0f" class="numbered-list" start="1"><li><strong>Understand the Basics:</strong><ul id="3dadea88-0b96-4254-905a-3f4078fb6b21" class="bulleted-list"><li style="list-style-type:disc">Ensure you have a solid understanding of basic authentication concepts, including password hashing, session management, and secure communication.</li></ul></li></ol><ol type="1" id="ecfd60ad-5c1b-46a3-8426-9e2efef8c285" class="numbered-list" start="2"><li><strong>Choose Authentication Factors:</strong><ul id="37d9ecf0-6c85-45a0-9916-6e6ac11b95bd" class="bulleted-list"><li style="list-style-type:disc">Decide which authentication factors you want to implement (e.g., password, TOTP, SMS). This can help you explore different aspects of MFA.</li></ul></li></ol><ol type="1" id="0a0817a9-9be4-420e-95c5-75c7aa9352e1" class="numbered-list" start="3"><li><strong>Learn about Cryptography:</strong><ul id="6885a747-e3f8-47ae-ab12-7bd50f8d9eaa" class="bulleted-list"><li style="list-style-type:disc">If implementing TOTP or other cryptographic methods, take the time to learn about cryptographic algorithms and best practices.</li></ul></li></ol><ol type="1" id="50789587-b452-4b30-a12c-87529191bffc" class="numbered-list" start="4"><li><strong>Implement a Basic User Registration System:</strong><ul id="aab0cabf-1958-4cc1-80c0-50e17adc6838" class="bulleted-list"><li style="list-style-type:disc">Develop a simple user registration system where users can create accounts and store basic user information securely.</li></ul></li></ol><ol type="1" id="3ea97e1d-6fb7-405c-b5ca-b303b70a9cbc" class="numbered-list" start="5"><li><strong>Explore Authentication Libraries:</strong><ul id="2ae9342e-d849-414a-aadc-0afadf560f5e" class="bulleted-list"><li style="list-style-type:disc">Consider using existing authentication libraries or frameworks for your chosen programming language. These can provide a foundation for secure authentication.</li></ul></li></ol><ol type="1" id="272ebe5d-94b5-4c10-930e-3400fc80977b" class="numbered-list" start="6"><li><strong>Implement MFA Methods:</strong><ul id="f19f08f4-4b5f-4e5a-86c8-73105fe7b450" class="bulleted-list"><li style="list-style-type:disc">Start by implementing one or two MFA methods. For example, you might begin with email-based codes or TOTP using a library like PyOTP (for Python) or OtpSharp (for C#).</li></ul></li></ol><ol type="1" id="420fc462-aa57-4441-9f6b-aca8e9c30282" class="numbered-list" start="7"><li><strong>Secure Session Management:</strong><ul id="9ccf5030-2f22-457b-a25c-ba8d96b97437" class="bulleted-list"><li style="list-style-type:disc">Implement secure session management to protect authenticated sessions from common security threats.</li></ul></li></ol><ol type="1" id="0ac511d5-39f1-4742-84af-598fcf4bc7c5" class="numbered-list" start="8"><li><strong>Include Error Handling and Logging:</strong><ul id="3d065566-4235-4624-8c7d-14cfcef53f3e" class="bulleted-list"><li style="list-style-type:disc">Implement thorough error handling to manage unexpected situations. Additionally, incorporate logging to track authentication and MFA events.</li></ul></li></ol><ol type="1" id="d5fb242d-da23-4a3b-b923-d96f3db712f4" class="numbered-list" start="9"><li><strong>User-Friendly Interfaces:</strong><ul id="87870151-ff0b-4831-87ae-0d3070de0ad7" class="bulleted-list"><li style="list-style-type:disc">Design user-friendly interfaces for MFA enrollment and authentication. This is essential for a positive user experience.</li></ul></li></ol><ol type="1" id="36dc7cbe-a77e-4dd1-a2e4-5dfaa556e789" class="numbered-list" start="10"><li><strong>Consider Security Challenges:</strong><ul id="dfa08b31-2770-4ce0-ae55-80973eda0c86" class="bulleted-list"><li style="list-style-type:disc">Intentionally introduce security challenges (e.g., simulated attacks) to understand potential vulnerabilities and how your system responds.</li></ul></li></ol><ol type="1" id="cc232865-1003-4a4a-911a-481c810f4946" class="numbered-list" start="11"><li><strong>Backup and Recovery:</strong><ul id="9f3a2eda-c565-4b50-bd38-55291b3482d1" class="bulleted-list"><li style="list-style-type:disc">Develop a mechanism for users to recover their accounts if they lose access to their primary authentication method.</li></ul></li></ol><ol type="1" id="f6df4e64-5e7f-40af-9b51-b77cc85400fc" class="numbered-list" start="12"><li><strong>Testing:</strong><ul id="7dc83053-0f2d-415f-b792-ddb163887108" class="bulleted-list"><li style="list-style-type:disc">Conduct extensive testing, including unit tests, integration tests, and security testing. This is crucial for identifying and addressing potential security flaws.</li></ul></li></ol><ol type="1" id="4e4c0903-b52f-479a-aa21-e0fcce726b9e" class="numbered-list" start="13"><li><strong>Documentation:</strong><ul id="ab89f873-b280-4060-9f1a-10e53f4e7a11" class="bulleted-list"><li style="list-style-type:disc">Create documentation explaining how your MFA system works, including setup instructions and security considerations.</li></ul></li></ol><ol type="1" id="cbcb4cbb-95de-4421-b1b5-1982fe5da9fc" class="numbered-list" start="14"><li><strong>Learn from Existing Solutions:</strong><ul id="ca9eb2ce-5d9b-429e-ae89-8e4a117d0654" class="bulleted-list"><li style="list-style-type:disc">Study how established MFA systems are designed and implemented. This can provide valuable insights and help you incorporate best practices into your project.</li></ul><p id="dc6f718a-ffde-4a51-a706-ce2108ada54c" class="">
+</p><p id="710446d8-7fe8-47f6-b5af-526cd50f4ad8" class=""><em><strong>Social Sign-In</strong></em></p><p id="1df49c76-8728-45c2-bce5-0ee0f5c552e7" class="">
+</p><ol type="1" id="9480749b-2244-42c7-97c4-1d93a67fc518" class="numbered-list" start="1"><li><strong>Social Login / Social Sign-In:</strong><ul id="3be66c74-54f9-44ca-9ca6-31c597fb784c" class="bulleted-list"><li style="list-style-type:disc">This is the overarching term for the process where users use their existing credentials from a social media or identity provider to log in to a website or application.</li></ul></li></ol><ol type="1" id="e2c3122f-6bcb-438d-a85b-64c872d133cb" class="numbered-list" start="2"><li><strong>Identity Provider (IdP):</strong><ul id="37f5f384-845f-4aa2-adb7-e3357f484b68" class="bulleted-list"><li style="list-style-type:disc">The third-party service (e.g., Google, Facebook) that authenticates users and provides information to the website or application.</li></ul></li></ol><ol type="1" id="f2e5fc53-d644-4df6-a98b-f9c9a0ca3788" class="numbered-list" start="3"><li><strong>OpenID Connect (OIDC):</strong><ul id="8c38edf0-2ff7-494c-9699-131d62a9fa84" class="bulleted-list"><li style="list-style-type:disc">An authentication protocol built on top of OAuth 2.0, often used for social login. It provides identity information in addition to authentication.</li></ul></li></ol><ol type="1" id="dbf29187-6a90-43bd-9678-ab0c092f16b0" class="numbered-list" start="4"><li><strong>OAuth 2.0:</strong><ul id="e43fd135-4260-4a1e-8a81-59e52373214b" class="bulleted-list"><li style="list-style-type:disc">The authorization framework that enables third-party login. It allows websites or applications to access user data from an identity provider without exposing the user&#x27;s credentials.</li></ul></li></ol><ol type="1" id="332162b8-1b88-40c7-86c4-63abad80c3fa" class="numbered-list" start="5"><li><strong>Single Sign-On (SSO):</strong><ul id="c5eaed7f-e018-4021-80e8-6d00b296a726" class="bulleted-list"><li style="list-style-type:disc">Social login often contributes to a Single Sign-On experience, where users can use one set of credentials to log in to multiple websites or applications.</li></ul></li></ol><ol type="1" id="12c1f275-1c9a-4188-8524-3897647ac4d0" class="numbered-list" start="6"><li><strong>Federated Identity:</strong><ul id="42caff1a-67f3-459e-90cf-e10bb88efec0" class="bulleted-list"><li style="list-style-type:disc">The concept of using a user&#x27;s identity across multiple organizations or domains. Social login is a form of federated identity.</li></ul></li></ol><p id="09e906bd-6727-403b-a48b-55684089eaf8" class="">
+</p><h2 id="020742ac-1977-4924-9a61-ae12dfd75227" class=""><mark class="highlight-red">Route v1</mark></h2><p id="5b13b683-51b2-4229-9867-3748cf91f290" class="">
+</p><p id="001c33e2-5582-4156-a60e-875507d8385d" class=""><mark class="highlight-yellow"><strong>To develop a Firebase web front-end application that connects with the Authenticator app for the generation of Time-based One-Time Passwords (TOTP) for two-factor authentication (2FA).</strong></mark></p><p id="9ec234fb-2a52-43c8-8885-24c1b0945171" class="">
+</p><ol type="1" id="92cecc80-4b21-451c-92b3-11737772e3ba" class="numbered-list" start="1"><li><strong>Front-end Development (HTML, CSS, JavaScript):</strong><ul id="885d31cb-0c70-4dd2-ae11-9ac324445a09" class="bulleted-list"><li style="list-style-type:disc">Create the user interface for your web application using HTML for structure, CSS for styling, and JavaScript for dynamic behavior.</li></ul><ul id="5e1ea69a-c2c0-440b-b7e8-6bac67968ecb" class="bulleted-list"><li style="list-style-type:disc">Integrate the Google Authenticator library in your front-end code to generate and handle TOTP.</li></ul></li></ol><ol type="1" id="241083ad-2cc4-4d01-b023-50a3176afed3" class="numbered-list" start="2"><li><strong>Firebase for Backend:</strong><ul id="802f204a-a612-4d4d-84f4-4b5e5024194e" class="bulleted-list"><li style="list-style-type:disc">Use Firebase Authentication for handling user authentication. Firebase supports various authentication providers, including email/password, Google, and others.</li></ul><ul id="3b3c9d40-d899-4529-b7db-d093559b8f31" class="bulleted-list"><li style="list-style-type:disc">Use Firebase Realtime Database or Cloud Firestore to store user data securely.</li></ul></li></ol><ol type="1" id="7e4c4169-c71c-491a-9490-96a2840aedd1" class="numbered-list" start="3"><li><strong>TOTP Generation:</strong><ul id="2edf6c48-64a6-4eb4-abf4-b000fd97062f" class="bulleted-list"><li style="list-style-type:disc">Implement TOTP generation on the server-side (Node.js or another server-side technology) using a library like <code><strong>speakeasy</strong></code> or <code><strong>notp</strong></code>.</li></ul><ul id="90ce3726-7222-474c-ae89-34d82087e4e1" class="bulleted-list"><li style="list-style-type:disc">Store the secret key securely for each user in Firebase.</li></ul></li></ol><ol type="1" id="b4b70893-900b-429b-814e-3f1ddec187fd" class="numbered-list" start="4"><li><strong>Communication Between Front-end and Firebase:</strong><ul id="1320ea82-e59b-4837-8d7c-f3c52666a187" class="bulleted-list"><li style="list-style-type:disc">Use Firebase SDK for JavaScript to interact with Firebase services from the front-end.</li></ul><ul id="82ceba98-41f0-4817-b80f-3eb388fb323a" class="bulleted-list"><li style="list-style-type:disc">Implement necessary Firebase Authentication features, such as user sign-up, sign-in, and account recovery.</li></ul></li></ol><ol type="1" id="cd5e16dd-cd08-4b71-ac7f-f1fe80d34008" class="numbered-list" start="5"><li><strong>Node.js (or other Server-Side Technology):</strong><ul id="cd3be6e6-8505-4b66-8e7f-6521633961d2" class="bulleted-list"><li style="list-style-type:disc">Create a server-side component (using Node.js or another technology) to handle TOTP generation and verification.</li></ul><ul id="3eae9154-f265-4e77-9737-fded6058e571" class="bulleted-list"><li style="list-style-type:disc">Communicate securely with Firebase to retrieve and store user data.</li></ul></li></ol><ol type="1" id="bc86198e-8c74-4d90-b60f-c25bd5bbe592" class="numbered-list" start="6"><li><strong>Security Considerations:</strong><ul id="b11ea97d-218c-451b-9398-d3b2a96af8f7" class="bulleted-list"><li style="list-style-type:disc">Ensure that all communications are secure, especially when handling sensitive information like TOTP secrets.</li></ul><ul id="c6fb8308-5db8-48bb-b167-d14be1d5d909" class="bulleted-list"><li style="list-style-type:disc">Implement proper error handling and user feedback for the authentication process.</li></ul><ul id="c102c367-9f4b-4b69-a0c3-b2d503995468" class="bulleted-list"><li style="list-style-type:disc">Consider additional security measures such as HTTPS to protect data in transit.</li></ul></li></ol><p id="59070981-4961-439f-89b1-8a2d7f83d78d" class="">
+</p><h3 id="4fede7b5-d774-4f23-82c3-94c93d8ce648" class="">Project RoadMap v1</h3><p id="ede3b705-3c77-42a9-9a95-4766aaa812a8" class="">
+</p><ol type="1" id="b8208e70-7668-4ca1-9e7e-ceff386ec821" class="numbered-list" start="1"><li><strong>User Registration:</strong><ul id="2ed489ae-c039-429d-9c2c-c711573018e6" class="bulleted-list"><li style="list-style-type:disc">During the registration process, generate a TOTP secret key for each user.</li></ul><ul id="88f8e46b-9c9b-425f-84f1-8a19c1fd3e80" class="bulleted-list"><li style="list-style-type:disc">Store the TOTP secret key securely in your Firebase database.</li></ul></li></ol><ol type="1" id="c86e8848-f107-46b9-86c5-83eb34ae8fd9" class="numbered-list" start="2"><li><strong>Enabling Two-Factor Authentication:</strong><ul id="518f1ed2-1eb6-4dd5-abd7-981eb0dbb3a3" class="bulleted-list"><li style="list-style-type:disc">Allow users to enable two-factor authentication in their profile settings.</li></ul></li></ol><ol type="1" id="9b221d49-0570-45df-a3e4-12b81d027e25" class="numbered-list" start="3"><li><strong>TOTP Generation:</strong><ul id="3587c841-1aed-4ae2-b247-67edec92a9db" class="bulleted-list"><li style="list-style-type:disc">On the server-side (using Node.js or another server-side technology), generate TOTPs based on the stored secret key and send them to the user.</li></ul></li></ol><ol type="1" id="d8bf5a6c-6366-48d8-872f-ef118d237d7f" class="numbered-list" start="4"><li><strong>User Verification:</strong><ul id="db0b163a-ff51-4146-ab06-f02132adc55d" class="bulleted-list"><li style="list-style-type:disc">When the user attempts to log in, prompt them to enter the TOTP generated by the Google Authenticator app.</li></ul></li></ol><ol type="1" id="2de7c7cd-0d32-48ed-a4e3-c4a7d9fe1a77" class="numbered-list" start="5"><li><strong>TOTP Validation:</strong><ul id="9b2f8aba-1b7a-48ea-b973-a3d120deab3f" class="bulleted-list"><li style="list-style-type:disc">Validate the entered TOTP on the server side to confirm the user&#x27;s identity.</li></ul></li></ol><ol type="1" id="1ce4ae1e-7702-47f7-8cc7-280125778089" class="numbered-list" start="6"><li><strong>Firebase Authentication:</strong><ul id="68ea2d6f-e035-4146-9883-332c3d5b2ea1" class="bulleted-list"><li style="list-style-type:disc">If TOTP validation is successful, proceed with Firebase Authentication using the user&#x27;s primary credentials (e.g., email and password).</li></ul></li></ol><p id="4f440fa9-65fd-4c2f-96e3-a8fe3b4bb9be" class="">
+</p><p id="f8cd19fc-f20b-42ec-a585-5dff93061904" class="">
+</p><h2 id="6a05fe87-22d5-4fec-8e03-353a6b32d668" class=""><mark class="highlight-red">Route v2</mark></h2><p id="4e29024c-d16f-4bbe-9edd-25a87b6ae7b2" class=""><em>Date: 24-12-2023</em></p><p id="eab2c713-a410-4d78-a4fa-dc29e289767c" class="">
+</p><p id="34e33a76-886d-400e-8f3b-dbc0478d9e33" class="">No change with Firebase</p><p id="4dc05ac8-21a3-439e-a36f-8861d1534733" class="">
+</p><h3 id="b4a516cc-d65f-4ffa-a283-bc0b7fcd5b1e" class=""><strong>Notable Security Features:</strong></h3><ol type="1" id="53c1efc1-1d6c-46ce-87a9-7ab7f8b16d12" class="numbered-list" start="1"><li><strong>Password Policies:</strong><ul id="01aa640d-afe5-47c9-97d2-5a4949051213" class="bulleted-list"><li style="list-style-type:disc">Enforcing a strong password policy is crucial for securing user accounts. Your requirements for at least 8 characters including numbers, alphabets, and special characters align with best practices.</li></ul><ul id="aacb1a15-1256-43fa-926c-5058db33d6a1" class="bulleted-list"><li style="list-style-type:disc">Encouraging the use of passphrases is a great idea. Passphrases, when long and unique, can be both strong and memorable.</li></ul></li></ol><ol type="1" id="f488a025-8c25-4c85-987b-e0a436bd2f32" class="numbered-list" start="2"><li><strong>Security Measures:</strong><ul id="04fd1d6f-b09c-49bf-9feb-2c029b3f13cb" class="bulleted-list"><li style="list-style-type:disc">Importing the rockyou file to prevent the use of common passwords is a good practice. It helps in mitigating the risk of users using easily guessable passwords.</li></ul><ul id="2365675a-0a5c-492b-a736-beb6f7882a48" class="bulleted-list"><li style="list-style-type:disc">Implementing countermeasures for SQL injection is essential. Parameterized queries or prepared statements can be effective in preventing SQL injection attacks.</li></ul><ul id="dffbbdd0-a053-4c58-9c7f-b9ba36a384ae" class="bulleted-list"><li style="list-style-type:disc">DDoS prevention is crucial for ensuring the availability of your service. Using services or tools that specialize in DDoS protection can be considered.</li></ul></li></ol><ol type="1" id="bd6f396f-1fc5-4d24-b900-7bd9781482d7" class="numbered-list" start="3"><li><strong>TOTP Implementation:</strong><ul id="fb3a4f1e-8312-48c8-8814-8bb48f410ce2" class="bulleted-list"><li style="list-style-type:disc">Developing a TOTP solution without relying on external services like Google Authenticator is a commendable approach. It gives you more control over the authentication process.</li></ul><ul id="697e50f7-10b9-4de5-8240-282ff27657f7" class="bulleted-list"><li style="list-style-type:disc">Ensure that your TOTP implementation follows the relevant standards (like RFC 6238) to maintain compatibility with other TOTP-compliant applications.</li></ul></li></ol><ol type="1" id="73ffa60e-69d0-4f47-bb1e-242cc3f0e636" class="numbered-list" start="4"><li><strong>JWT for User Authentication:</strong><ul id="7119a7a6-b37f-4862-99bc-128bd2463ca1" class="bulleted-list"><li style="list-style-type:disc">Using JSON Web Tokens (JWTs) for user authentication is a good choice. JWTs are stateless, compact, and can be easily transmitted.</li></ul><ul id="80118d1f-4140-4b3b-8a90-c723b2ab96c6" class="bulleted-list"><li style="list-style-type:disc">Ensure that you validate and secure JWTs properly to prevent common vulnerabilities, such as token tampering.</li></ul></li></ol><ol type="1" id="461eaa01-8feb-468a-87bd-ee387562c263" class="numbered-list" start="5"><li><strong>Node.js and TypeScript:</strong><ul id="f3624dd0-c965-45e3-84a9-ff397738f3be" class="bulleted-list"><li style="list-style-type:disc">Node.js is a popular choice for building scalable and efficient server-side applications. Using TypeScript adds static typing, which can help catch errors during development.</li></ul><ul id="8b29867f-b912-434b-99fa-ffdb4706755d" class="bulleted-list"><li style="list-style-type:disc">Keep your Node.js dependencies up to date to address security vulnerabilities.</li></ul></li></ol><ol type="1" id="116b2efc-2986-49ff-b625-450795168f98" class="numbered-list" start="6"><li><strong>Session Tokens:</strong><ul id="d71d9a6b-b8a9-446e-8aee-528284b5c6df" class="bulleted-list"><li style="list-style-type:disc">Introducing session tokens enhances security by reducing the exposure of long-lived authentication tokens. Make sure to handle sessions securely, considering aspects like token storage and expiration.</li></ul></li></ol><p id="54274a45-f93e-45c5-8a81-ca675e76c359" class="">
+</p><h2 id="aba22fa1-fcb6-47c5-97bb-6be2e9b487ba" class=""><strong>TOTP Overview:</strong></h2><ol type="1" id="ec2e8160-81b2-417b-b53a-461ab8f5d002" class="numbered-list" start="1"><li><strong>Secret Key Generation:</strong><ul id="0473e036-7c55-4bac-96f1-8bd52022785d" class="bulleted-list"><li style="list-style-type:disc">When a user enables 2FA, the server generates a unique secret key for that user. This key is a random, long, and cryptographically secure value.</li></ul></li></ol><ol type="1" id="47fc08f6-a27d-455b-9b74-b98ed5b073e7" class="numbered-list" start="2"><li><strong>QR Code Provisioning:</strong><ul id="e78cf15c-f989-47e3-b2a2-5c856bbac569" class="bulleted-list"><li style="list-style-type:disc">The secret key is typically encoded into a QR code. The user scans this QR code using a 2FA app (e.g., Google Authenticator or Authy) on their mobile device.</li></ul></li></ol><ol type="1" id="ecc97cd6-c0a7-4f6b-b9a1-3c34678f2f4a" class="numbered-list" start="3"><li><strong>Client-Side Generation:</strong><ul id="2c93e7eb-2ddf-49f8-828e-3f47d7448ea0" class="bulleted-list"><li style="list-style-type:disc">The 2FA app on the user&#x27;s device uses the secret key to generate TOTP codes. TOTP is time-based, and the code changes every 30 seconds (or a configurable time interval).</li></ul></li></ol><h3 id="2ca9a061-a290-4a0d-b8bb-7315ec3e411f" class=""><strong>TOTP Code Generation (Simplified):</strong></h3><ol type="1" id="84acbd60-f35f-4f00-9459-d172da07d1c5" class="numbered-list" start="1"><li><strong>Time Synchronization:</strong><ul id="6412b9d4-c086-41a4-a581-f988b7874631" class="bulleted-list"><li style="list-style-type:disc">Both the server and the user&#x27;s device are synchronized to the same time source (usually Unix time).</li></ul></li></ol><ol type="1" id="b91f484e-4fd0-44e8-b64c-903822916103" class="numbered-list" start="2"><li><strong>Hashing with HMAC:</strong><ul id="73d03c5a-261b-48f4-89f5-6230c42b0871" class="bulleted-list"><li style="list-style-type:disc">The current time (in 30-second intervals) and the secret key are used to generate a hash using HMAC. The HMAC algorithm provides a way to hash data with a secret key in a way that is computationally difficult to reverse.</li></ul></li></ol><ol type="1" id="e27c7db8-f4ee-468c-af6c-e626e1a2032b" class="numbered-list" start="3"><li><strong>Code Extraction:</strong><ul id="ca10fb7c-c8d2-4b2d-986b-298e7143d221" class="bulleted-list"><li style="list-style-type:disc">A subset of the hash (usually 6 or 8 digits) is extracted to form the TOTP code.</li></ul></li></ol><h3 id="a7df4677-1de0-4acb-bb75-6ee2e1b0e5d1" class=""><strong>Authentication Process:</strong></h3><ol type="1" id="c42418f5-52ba-4438-92fd-a7c47ba746c3" class="numbered-list" start="1"><li><strong>User Login:</strong><ul id="115b56dc-9314-4550-9cb9-0600b6ffd5e8" class="bulleted-list"><li style="list-style-type:disc">When a user logs in, they enter their regular username and password.</li></ul></li></ol><ol type="1" id="07d772ef-e039-4536-96e6-4988dcef0de0" class="numbered-list" start="2"><li><strong>2FA Challenge:</strong><ul id="6ef2dd51-7988-470a-9f6f-2bca8ae9c079" class="bulleted-list"><li style="list-style-type:disc">If 2FA is enabled, the server prompts the user for a TOTP code.</li></ul></li></ol><ol type="1" id="3e340fa8-b8f5-4435-93e2-891356b2078e" class="numbered-list" start="3"><li><strong>User Input:</strong><ul id="0f311def-2e7b-4725-85cd-59765ef58b19" class="bulleted-list"><li style="list-style-type:disc">The user opens their 2FA app, sees the current TOTP code, and enters it into the authentication prompt.</li></ul></li></ol><ol type="1" id="f28f05f0-cd3e-4972-90f6-9dc7b1c73e0c" class="numbered-list" start="4"><li><strong>Server Verification:</strong><ul id="909e51c4-2a80-49fb-ba8f-a7b6a420c7b5" class="bulleted-list"><li style="list-style-type:disc">The server independently generates a TOTP code based on the stored secret key and compares it with the user-provided code.</li></ul></li></ol><ol type="1" id="c25a9871-b72e-47ca-bb3a-7b9f277572f9" class="numbered-list" start="5"><li><strong>Success or Retry:</strong><ul id="c1ff4abf-7d40-4f56-b7e8-9ea5fa123b6a" class="bulleted-list"><li style="list-style-type:disc">If the codes match, the user is successfully authenticated. If not, the user is prompted to retry.</li></ul></li></ol><p id="ebdec53f-dcd5-4112-a731-1eca94527c3f" class="">
+</p><h3 id="50795ae8-debd-45a9-91d9-039fd3592dfb" class="">Deep Dive into HMAC:</h3><p id="1cddc7c8-c7a7-478d-aebc-2e051b9c9e83" class="">
+</p><p id="fc0162fe-7cc3-4992-8a54-48cbc40c21af" class=""><mark class="highlight-blue">In the context of TOTP-based 2FA, the secret key is used in the HMAC computation to generate the one-time password (TOTP).</mark> The use of HMAC enhances the security of the TOTP generation process by providing a secure and verifiable way to hash the combination of the secret key and the current time interval, creating a time-dependent and cryptographically secure code.</p><p id="8333718c-779a-4810-916b-62c6619dd2ab" class="">
+</p><ol type="1" id="a3ed25bb-135e-4579-b6ff-59b16786a57e" class="numbered-list" start="1"><li><strong>Cryptographically Secure Random Number Generator (CSPRNG):</strong><ul id="9e15d40b-8e40-4620-aa49-4cacc0ce0e0f" class="bulleted-list"><li style="list-style-type:disc">A CSPRNG is a type of random number generator designed for use in cryptography. It meets specific criteria to ensure that the generated numbers are statistically indistinguishable from true randomness and that they cannot be feasibly predicted or reproduced.</li></ul></li></ol><ol type="1" id="e61f1812-19ee-43d4-8331-a47122fc7674" class="numbered-list" start="2"><li><strong>Entropy:</strong><ul id="1cea8774-b139-491d-bb30-261b557ce4ee" class="bulleted-list"><li style="list-style-type:disc">Entropy is a measure of unpredictability. In the context of key generation, high entropy means that the key has a large degree of randomness and is not easily guessable.</li></ul><ul id="7b40495f-482b-4793-ab07-c0a952a18847" class="bulleted-list"><li style="list-style-type:disc">Cryptographically secure key generation sources entropy from various unpredictable external events, such as system interrupts, hardware noise, or other sources that are difficult for an adversary to predict.</li></ul></li></ol><ol type="1" id="979930ac-3354-46a2-9328-4d728c373f4e" class="numbered-list" start="3"><li><strong>Algorithmic Properties:</strong><ul id="537b2fc3-65db-4b65-a698-92ee6ea5c44e" class="bulleted-list"><li style="list-style-type:disc">The algorithm used for generating the random key must exhibit certain properties, including uniform distribution (each possible value is equally likely) and resistance to algorithmic analysis.</li></ul><ul id="0471d0cd-7b56-4724-89e3-029f2fe98db4" class="bulleted-list"><li style="list-style-type:disc">Common algorithms for key generation include Fortuna, Yarrow, and the cryptographic functions provided by operating systems or cryptographic libraries.</li></ul></li></ol><ol type="1" id="a40f2796-53ec-4268-b95a-8b88f40e403c" class="numbered-list" start="4"><li><strong>Key Length:</strong><ul id="6eff66e0-d3e3-4c37-b38f-a587ab63fb87" class="bulleted-list"><li style="list-style-type:disc">A &quot;long&quot; key implies that it has a sufficient length to resist various cryptographic attacks, including brute-force attacks. The appropriate key length depends on the specific cryptographic algorithm being used.</li></ul><ul id="6d54d851-2f78-4b74-bd5c-794a715d3def" class="bulleted-list"><li style="list-style-type:disc">For example, if using the SHA-256 hash function in HMAC, a 256-bit key would be considered long.</li></ul></li></ol><ol type="1" id="cc4aa13b-75a6-4ccb-85c8-70c0b4e14a5c" class="numbered-list" start="5"><li><strong>Algorithm Agnosticism:</strong><ul id="f370d39c-9a9e-4e6a-88d2-82fe681cb29b" class="bulleted-list"><li style="list-style-type:disc">The term &quot;cryptographically secure&quot; does not refer to a specific cryptographic algorithm for key generation but rather to the robustness and security properties of the overall key generation process.</li></ul><ul id="43eaf6a7-8484-48d9-8914-14082f3c1db3" class="bulleted-list"><li style="list-style-type:disc">The choice of a specific cryptographic algorithm depends on the use case and security requirements, but the principles of secure random number generation and key length apply universally.</li></ul></li></ol><p id="35c9a7b9-fcb3-4113-b530-5e5ec9548c99" class="">
+</p><p id="cce3659c-e547-4683-93da-78f68a3eee66" class="">When we say a secret key is &quot;cryptographically secure,&quot; it means that the key possesses certain properties that make it suitable for cryptographic operations, especially in the context of securing sensitive information like user authentication. Here are some key characteristics:</p><ol type="1" id="f1caaaa9-fce4-4f37-9a35-810e25a4c8f8" class="numbered-list" start="1"><li><strong>Randomness:</strong><ul id="9b23b91f-0343-46ae-93cf-205610849cfe" class="bulleted-list"><li style="list-style-type:disc">The key is generated using a cryptographically secure random number generator, ensuring that it is not predictable. Predictable keys are vulnerable to various attacks.</li></ul></li></ol><ol type="1" id="9a36939f-d574-402f-ac18-3505b32d413d" class="numbered-list" start="2"><li><strong>Uniqueness:</strong><ul id="e3c3624b-07b5-47c0-98f8-ae70b8878749" class="bulleted-list"><li style="list-style-type:disc">Each user&#x27;s secret key should be unique. Reusing keys across users introduces security risks, as compromises in one user&#x27;s key could affect others.</li></ul></li></ol><ol type="1" id="108e35d9-4ad7-4102-9751-87517de0caee" class="numbered-list" start="3"><li><strong>Sufficient Length:</strong><ul id="1c9d0ff0-32cb-436b-8943-595a253f4753" class="bulleted-list"><li style="list-style-type:disc">The key should be long enough to resist brute-force attacks. Longer keys generally provide a larger key space, making it computationally infeasible for an attacker to try all possible combinations.</li></ul></li></ol><ol type="1" id="21b323db-fa5b-476a-9cd7-3697b7f2331e" class="numbered-list" start="4"><li><strong>Entropy:</strong><ul id="58913fcd-452f-4a1e-9031-77484bae869e" class="bulleted-list"><li style="list-style-type:disc">Entropy measures the unpredictability of the key. A key with high entropy is more resistant to statistical attacks.</li></ul></li></ol><ol type="1" id="22608471-758a-4c89-9a31-8a69f7021911" class="numbered-list" start="5"><li><strong>Cryptographic Strength:</strong><ul id="036f31c9-4910-4f07-ab11-201782f8a554" class="bulleted-list"><li style="list-style-type:disc">The key should be generated using cryptographic algorithms that ensure its strength against various attacks, such as those based on mathematical analysis or computational complexity.</li></ul></li></ol><h3 id="e29c1864-07b7-49f8-9bc0-a4fcb471e3fa" class=""><strong>HMAC (Hash-based Message Authentication Code):</strong></h3><p id="27de7ba5-6f3f-4811-b89a-c4c309603b10" class="">HMAC is a specific type of message authentication code (MAC) involving a cryptographic hash function and a secret key. It provides a way to verify both the integrity and authenticity of a message. Here&#x27;s how HMAC works:</p><ol type="1" id="fe93f17b-64bd-45bf-a736-949ce2ae3999" class="numbered-list" start="1"><li><strong>Basic Structure:</strong><ul id="4c08255b-5970-4f90-8065-a591edb96051" class="bulleted-list"><li style="list-style-type:disc">HMAC is constructed using a hash function (e.g., SHA-256 or SHA-3) and a secret key. The formula is:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fbd77117-7489-4075-9b85-1701f09e3a2d" class="code"><code class="language-Scss" style="white-space:pre-wrap;word-break:break-all">scssCopy code
+HMAC(K, M) = H((K ⊕ opad) || H((K ⊕ ipad) || M))
+
+</code></pre></li></ul><ul id="f358c7cf-502e-446c-bacc-4ae1c7d514b6" class="bulleted-list"><li style="list-style-type:disc"><code><strong>K</strong></code> is the secret key, <code><strong>M</strong></code> is the message, <code><strong>⊕</strong></code> denotes XOR, <code><strong>opad</strong></code> is the outer padding, and <code><strong>ipad</strong></code> is the inner padding.</li></ul></li></ol><ol type="1" id="8e739c49-6f29-4015-be74-3dce5b5aa007" class="numbered-list" start="2"><li><strong>Keyed Hashing:</strong><ul id="1a658ca5-ebf2-4e38-8fc1-4cc4b5b5a20d" class="bulleted-list"><li style="list-style-type:disc">The key is XORed with the inner and outer pads to create two different keys used in the HMAC computation.</li></ul></li></ol><ol type="1" id="b2136296-a979-4c6d-b076-cfe819307968" class="numbered-list" start="3"><li><strong>Double Hashing:</strong><ul id="c2b77456-574c-4501-b826-252f81a7f70e" class="bulleted-list"><li style="list-style-type:disc">The message is hashed twice: once with the inner key and once with the outer key.</li></ul></li></ol><ol type="1" id="332b06f7-11ca-4348-a98f-690f13d4f09c" class="numbered-list" start="4"><li><strong>Concatenation:</strong><ul id="12cbe1d1-e346-4f01-8fd1-d3a349444cb1" class="bulleted-list"><li style="list-style-type:disc">The two hash results are concatenated, and the final result is obtained.</li></ul></li></ol><ol type="1" id="5ed2ce49-c096-4587-81d7-8cfb3511a666" class="numbered-list" start="5"><li><strong>Security Features:</strong><ul id="8059f38d-a981-4492-b5e0-49e9ce2dfdfc" class="bulleted-list"><li style="list-style-type:disc">HMAC provides collision resistance, meaning it is computationally infeasible for an attacker to find two different inputs that produce the same HMAC value.</li></ul><ul id="04946355-53d6-4275-9f12-10087ac6796d" class="bulleted-list"><li style="list-style-type:disc">It also ensures that knowledge of the key is necessary to compute the HMAC.</li></ul></li></ol><p id="7d591d41-5c9b-40cb-9187-111d324151e5" class="">
+</p><h2 id="13a31612-8041-42e3-ba8d-09af8b941080" class=""><mark class="highlight-teal">Technical Drops</mark></h2><p id="7e5ae74f-a27e-4714-8b46-d9eb0ec0b64a" class="">
+</p><p id="4df37ab5-20db-49d7-836e-4a86c57d8550" class=""><mark class="highlight-red"><strong>RFC 6238</strong></mark> defines the technical specifications and guidelines for implementing TOTP as a time-based authentication mechanism.</p><p id="dc585626-9374-4312-9267-b5bebd52cba3" class="">
+</p><p id="4c05d937-8a90-4ba2-8fff-f8244889c186" class=""><code>HMAC-based One-Time Password (HOTP) algorithm</code></p><p id="193aac65-e6e8-4fc2-85fc-76dede968169" class="">
+</p><p id="d1484ab4-de6b-4811-bf6b-003226836530" class="">RFC 6238 is a standard published by the Internet Engineering Task Force (IETF) that defines a Time-based One-Time Password (TOTP) algorithm, which is widely used for two-factor authentication (2FA). TOTP is an algorithm that computes a one-time password based on a shared secret key and the current time.</p><p id="661b19d8-f798-4a8b-bb2c-a0ac23758123" class="">
+</p><p id="7556f1df-8e53-4723-80c4-bc986bfc4c4d" class=""><code>Hashed Message Authentication Code (HMAC)</code></p><p id="df9fc72c-c9bf-49ad-ba02-fce1bf466b4a" class="">
+</p><figure id="177a5833-cf96-4e2d-808e-1fd8c38c1e9a" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Screenshot_2023-12-27_at_9.04.48_PM.png"><img style="width:576px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Screenshot_2023-12-27_at_9.04.48_PM.png"/></a></figure><p id="7dfefac3-2ff4-4a47-866b-1c8a04c1cdf4" class="">
+</p><p id="eb4fc14f-54e7-4d94-984e-c4c716f3892b" class="">The key components of RFC 6238 are:</p><ol type="1" id="a7a0fd11-d28f-41ba-b428-834dd6cff937" class="numbered-list" start="1"><li><mark class="highlight-red"><strong>HMAC</strong></mark><strong> (Hash-based Message Authentication Code):</strong> HMAC is a specific construction for creating a message authentication code (MAC) involving a cryptographic hash function in combination with a secret key. In the context of TOTP, HMAC is used to protect the integrity and authenticity of the messages exchanged between the client (generating the one-time password) and the server (verifying the password).</li></ol><ol type="1" id="187b853f-b704-47b5-9583-a0bb4d1cec38" class="numbered-list" start="2"><li><strong>Time-Based OTP (TOTP):</strong> TOTP is an extension of the HMAC-based One-Time Password (HOTP) algorithm. Instead of generating a one-time password based on a counter (as in HOTP), TOTP uses the current time as a factor. The client device and the server must be synchronized to ensure that the generated one-time password is valid for a short period (typically 30 seconds), providing an additional layer of security.</li></ol><figure id="7fa51fd0-ba31-426f-a423-664fc240973a" class="image" style="text-align:center"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled.png"><img style="width:480px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled.png"/></a></figure><p id="1784878f-fbfa-4dd1-8ea9-330d2dd810e7" class="">
+</p><p id="b950bcba-84fe-447d-a4a3-cc05a8a31f13" class="">Here’s the algorithm for Time-Based One-Time Password (TOTP) based on RFC 6238:</p><ol type="1" id="72e67530-cb5c-43f8-824a-428478a66513" class="numbered-list" start="1"><li><strong>Set up a shared secret key: </strong>The user and the server establish a shared secret key. This key is securely exchanged or generated during the initial setup.</li></ol><ol type="1" id="5082ee35-b5af-4085-9555-da084cd8fe2a" class="numbered-list" start="2"><li><strong>Determine the current time:</strong> Obtain the current time in Unix time format, which is the number of seconds elapsed since January 1, 1970 (UTC).</li></ol><ol type="1" id="ae8aec25-af21-4b79-92b0-82642fe726a1" class="numbered-list" start="3"><li><strong>Generate a counter value:</strong> Divide the current time by a predefined time interval (typically 30 seconds) to obtain a counter value. This ensures that the counter value changes at regular intervals.</li></ol><ol type="1" id="853e9fc0-1351-4bb5-9f0f-612d3329afab" class="numbered-list" start="4"><li><strong>Convert the counter to an 8-byte array:</strong> Represent the counter value as an 8-byte array using big-endian byte order.</li></ol><ol type="1" id="a0889c44-9775-4afc-8231-8d4b9fc655e5" class="numbered-list" start="5"><li><strong>Apply the HMAC-SHA1 algorithm:</strong> Use the shared secret key as the <mark class="highlight-red">HMAC-SHA1 </mark>algorithm key to hash the counter value. This produces a 20-byte hash value.</li></ol><ol type="1" id="fbc9abff-ce2e-48d6-88a8-3419d61e8cf9" class="numbered-list" start="6"><li><strong>Dynamic Truncation:</strong> Take the last 4 bytes of the hash value (specifically, the 31st to 34th bytes) as an offset. Perform a bitwise AND operation with a binary mask to obtain a 4-byte dynamic truncation value.</li></ol><ol type="1" id="356b0053-d3bb-4e60-97a4-82dcb29575fc" class="numbered-list" start="7"><li><strong>Apply a specific encoding:</strong> Convert the dynamic truncation value to a human-readable format. This can be done by taking the 4-byte value modulo 10^d, where “d” is the desired number of digits (typically 6).</li></ol><ol type="1" id="00d83db8-e94f-42a4-9176-8bd7ba7caa6a" class="numbered-list" start="8"><li><strong>Format the result:</strong> Pad the resulting value with leading zeros if needed to achieve the desired number of digits.</li></ol><p id="4d21a7c2-220d-4e97-836a-4f0a10a115f3" class="">
+</p><p id="0afb8732-6c7a-4d09-8b5a-95f84ca72fab" class="">Unix time is a system for tracking time in computing. It is a way to represent the current time as the number of seconds that have elapsed since 00:00:00 Coordinated Universal Time (UTC), Thursday, January 1, 1970 (not counting leap seconds). This point in time is often referred to as the Unix epoch.</p><p id="f9d153be-7d5b-4f3c-b7c5-e0886165a12c" class="">So, when you obtain the &quot;current time&quot; in Unix time format, you are essentially getting the number of seconds that have passed since the Unix epoch. This timestamp is commonly used in various computing systems and programming languages to represent and calculate time. It provides a standardized way to handle time-related operations across different platforms.</p><p id="b76df9a4-79b7-484c-bb0e-9228b9a0b1e1" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="06ccf601-1626-42f2-901f-2f8677af11fd" class="code"><code class="language-Python">import time
+
+current_unix_time = int(time.time())
+print(current_unix_time)</code></pre><p id="3dfb7503-ab5b-4d30-8205-1b88455e1e75" class="">
+</p><p id="ff0de9ef-c4ce-4d64-8fd9-21cbd93d470c" class="">
+</p><figure id="732a431a-f56c-40ea-ae1b-6ccaea13f1b8" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Screenshot_2023-12-27_at_8.41.55_PM.png"><img style="width:432px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Screenshot_2023-12-27_at_8.41.55_PM.png"/></a></figure><p id="c514b7d8-758d-4e54-87bb-324a8d8772d7" class="">
+</p><h2 id="fde157bd-d5cb-430f-b640-3598a8b8a55c" class=""><mark class="highlight-red"><strong>Sequence Diagram</strong></mark></h2><p id="821e8edb-9b26-4d29-9bfc-b4f31ac74f5e" class=""><strong>1. Registration flow</strong></p><figure id="b9a18a84-4b65-46b0-ab17-29340f0b67ed" class="image"><a href="https://miro.medium.com/v2/resize:fit:700/1*SNd7uG4qOKe8kkAndX_xlQ.png"><img style="width:480px" src="https://miro.medium.com/v2/resize:fit:700/1*SNd7uG4qOKe8kkAndX_xlQ.png"/></a></figure><p id="ea63af64-65aa-41e3-8178-82402e249b3c" class="">TOTP Registration Flow</p><p id="f522736e-20f7-4cd5-a5e7-55a1f8d8ea8f" class=""><strong>2. OTP Validation flow</strong></p><figure id="187e469f-2ff8-4e88-8946-fe8e17b13b86" class="image"><a href="https://miro.medium.com/v2/resize:fit:700/1*22Iw-E3yypRaSZopmQrLOg.png"><img style="width:480px" src="https://miro.medium.com/v2/resize:fit:700/1*22Iw-E3yypRaSZopmQrLOg.png"/></a></figure><p id="534ee9ac-dc67-43e3-acab-3b48a07822b4" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b0782872-6400-47c4-a0a2-d4cc92cdd717" class="code"><code class="language-Pascal" style="white-space:pre-wrap;word-break:break-all">Extension of the One-Time Password (OTP)
+   algorithm, namely the HMAC-based One-Time Password (HOTP) algorithm,
+   to support the time-based moving factor.  The
+   HOTP algorithm specifies an event-based OTP algorithm, where the
+   moving factor is an event counter.  The present work bases the moving
+   factor on a time value.  A time-based variant of the OTP algorithm
+   provides short-lived OTP values, which are desirable for enhanced
+   security.</code></pre><p id="68ac7501-96b8-4c05-b8c7-2ebeeb1c9cf5" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c2742493-e602-4d8c-9cf6-077a2093168a" class="code"><code class="language-Pascal" style="white-space:pre-wrap;word-break:break-all">The proposed algorithm can be used across a wide range of network
+   applications, from remote Virtual Private Network (VPN) access and
+   Wi-Fi network logon to transaction-oriented Web applications.  The
+   authors believe that a common and shared algorithm will facilitate
+   adoption of two-factor authentication on the Internet by enabling
+   interoperability across commercial and open-source implementations.</code></pre><p id="a9860002-9c5d-4020-af77-86bdfbe61625" class="">
+</p><p id="7f63a441-7167-4cc8-9427-f48eecf9f00a" class=""><code>OATH (Open AuTHentication)</code></p><p id="190a06ab-b54a-420e-91a0-42dc6a23f8e5" class="">OATH, which stands for Open AuTHentication, is an industry-wide collaboration that aims to develop open standards for strong authentication. The organization was founded in 2004 with the goal of addressing the increasing need for stronger authentication methods in various online and network security scenarios. OATH focuses on creating open standards to promote interoperability and vendor neutrality in the authentication space.</p><p id="ad9db431-3ecb-49dc-9873-ea5010ddcfe1" class="">Key aspects of OATH include:</p><ol type="1" id="56526461-fd66-4059-9617-a33675771b2d" class="numbered-list" start="1"><li><strong>Open Standards:</strong> OATH develops and promotes open standards for strong authentication. These standards are intended to be widely adopted across different platforms and technologies, fostering interoperability and flexibility.</li></ol><ol type="1" id="c55dfcfc-c753-4773-98fe-283add8dad97" class="numbered-list" start="2"><li><strong>Strong Authentication:</strong> OATH is particularly known for its work on developing open standards for strong authentication methods, including one-time passwords (OTP) and related technologies. These methods are commonly used for two-factor authentication (2FA) and other security applications.</li></ol><ol type="1" id="48816227-b26f-4a1b-aa6d-114cc459195a" class="numbered-list" start="3"><li><strong>OATH OTP Algorithms:</strong> OATH has defined several OTP algorithms, including HOTP (HMAC-based One-Time Password) and TOTP (Time-based One-Time Password). These algorithms provide a framework for generating one-time passwords, enhancing security in authentication processes.</li></ol><ol type="1" id="f7a91ecc-747e-4422-bb9f-53b34d497147" class="numbered-list" start="4"><li><strong>Vendor Neutrality:</strong> OATH promotes vendor neutrality by providing open specifications that can be implemented by different vendors. This approach encourages competition and innovation while ensuring compatibility and interoperability.</li></ol><ol type="1" id="020ede5c-a709-4cac-a3a0-a4d890f79e1d" class="numbered-list" start="5"><li><strong>Industry Collaboration:</strong> OATH encourages collaboration among industry stakeholders, including technology vendors, service providers, and security professionals. By bringing together diverse expertise, OATH aims to address the challenges and requirements of modern authentication systems.</li></ol><p id="218f51cf-cb65-4689-95c1-4ba0a29a59aa" class="">
+</p><h3 id="277218b4-ac30-4084-86bf-b3b9abde721c" class="">Dig #2</h3><p id="74eb3276-d8d5-440d-9cb5-9470922b4024" class="">
+</p><p id="d0629732-c8bf-4088-8eae-c10164e56c86" class="">Using <mark class="highlight-red">Speakeasy </mark>module in node, to enhance production of TOTP passwords.</p><p id="1e0570b3-08d1-4071-8e4e-72b265ee74af" class=""><mark class="highlight-red">Insomnia</mark>, an alternative for postman in MacOS.</p><h1 id="b72f666d-3f85-42bb-aea1-976f2a09515e" class=""><strong>Insomnia</strong></h1><p id="843c81cf-d0e0-4878-b355-b9af77d52771" class="">Start building, designing, testing better APIs through spec-first development driven by an APIOps CI/CD pipelines.</p><figure id="7af01c6f-1176-48e3-b35d-d03bbb17d644" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%201.png"><img style="width:384px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%201.png"/></a></figure><p id="f91e51c1-660c-4062-b9ca-de5f8c7feab9" class="">
+</p><p id="8cc69111-a67b-4e05-9f48-3c65eacb011f" class="">Still from Insomnia to test secret code generation.</p><figure id="c0fcb32f-2328-4cd3-bdc7-95fe5074b545" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%202.png"><img style="width:1514px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%202.png"/></a></figure><p id="f586aaae-e724-47a8-a477-2a44c2ea7d40" class="">
+</p><p id="124d918d-6c79-4e9f-9a04-c18dc64dd925" class="">TOTP Trial Token Generation</p><figure id="4b27644d-3b81-4d33-9004-8f43f92d1850" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%203.png"><img style="width:931px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%203.png"/></a></figure><p id="703790dc-32d9-495b-a4d2-55e82ad6b519" class="">
+</p><p id="2416ad55-7113-428b-b445-0b56b97696f6" class="">Time Limit of 30 seconds included.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="580b25f6-abb1-43ea-aca7-550c7e7150ad" class="code"><code class="language-JavaScript">{
+	&quot;token&quot;: &quot;317691&quot;,
+	&quot;remaining&quot;: 18
+}</code></pre><p id="e396ef64-b45f-4d76-bdc4-9276be43071e" class="">
+</p><p id="1dd04be5-205c-496c-8e1d-75414dc012eb" class="">Validating TOTP token with the specified time-limit</p><figure id="ae0053ef-15c6-41eb-869b-3c224eba032d" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%204.png"><img style="width:920px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%204.png"/></a></figure><p id="a8683a85-7119-4158-8c32-ca2b27990eab" class="">
+</p><p id="29647b26-d7ab-4756-987c-f98f0e0c583e" class="">
+</p><h3 id="7c78763d-add8-49d8-a130-327ea6fafcee" class="">Drop #3</h3><p id="696de57a-a401-49d8-aa1e-a7d5001bae6b" class="">
+</p><p id="15dba5b1-4e56-4d6d-ab4f-f136ae21c088" class=""><code>Base32-Encoded Key</code></p><p id="50302d8b-a11a-4280-a594-9fb2c0210026" class="">Base32 is a binary-to-text encoding scheme that represents binary data in an ASCII string format using a set of 32 characters (A-Z and 2-7). This encoding is often used to represent binary data, such as cryptographic keys, in a human-readable format.</p><p id="f4d1461c-1950-4a36-8bfc-0811610761bc" class="">A secret key that has been Base32-encoded will look like a string of characters from the Base32 character set. For example, a Base32-encoded secret key might look like:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a5ab2081-c1c6-4e94-83f9-a36c9acaaf13" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">K5GRTJEKMN2XO5LB</code></pre><p id="604213f3-4381-4b80-b678-1569808407aa" class="">If you have a Base32-encoded secret key and need to use it in a system that requires the raw binary data, you would need to decode it from Base32. Many programming languages and libraries provide functions or methods for Base32 encoding and decoding.</p><p id="af4039b4-aa74-4f6f-9121-63dc113b86b3" class="">
+</p><p id="8c83b59c-7cac-4acb-b9c8-733986ede879" class="">
+</p><p id="14e62d5c-a400-4f9e-8bf6-7ce96f342355" class=""><code>HMAC - Hash-based Message Authentication Code</code></p><p id="98655079-420c-458e-a2e2-d9a9647cd152" class="">HMAC, which stands for Hash-based Message Authentication Code, is a specific type of message authentication code (MAC) involving a cryptographic hash function and a secret cryptographic key. HMAC can be used to verify both the data integrity and the authenticity of a message. It is widely used in various security protocols and applications.</p><p id="c738240b-7610-47f2-9bc6-692ad829fdec" class="">The HMAC algorithm takes a message and a secret key as input and produces a fixed-size hash value as output. The key is used to add an extra layer of security by preventing an attacker from tampering with the message or creating a valid HMAC without knowing the secret key.</p><p id="e67c0d22-7591-4773-8d83-c7e05a345f75" class="">In the context of your provided information, the <code><strong>hmac</strong></code> module in Python&#x27;s standard library provides an implementation of HMAC. The <code><strong>hmac.new(key, msg, digestmod)</strong></code> function is typically used, where:</p><ul id="266f421c-f709-4c7a-bc18-d6a1d20ebf75" class="bulleted-list"><li style="list-style-type:disc"><code><strong>key</strong></code>: The secret key used for the HMAC.</li></ul><ul id="a27b8849-4d6f-4d05-a083-4558496ad716" class="bulleted-list"><li style="list-style-type:disc"><code><strong>msg</strong></code>: The message to be authenticated.</li></ul><ul id="6084509f-4b3f-4c85-b3f3-10dde13f4ba0" class="bulleted-list"><li style="list-style-type:disc"><code><strong>digestmod</strong></code>: The hash function used (e.g., <code><strong>hashlib.sha256</strong></code>).</li></ul><p id="c70fc82b-56cd-4e38-be35-56705a61505b" class="">Now, regarding the term &quot;wrapper function&quot; in your context:</p><p id="9b1f09a5-2fe6-4eca-a7bb-d83cc2180cf3" class="">In software development, a wrapper function is a function that provides a simplified or additional layer of functionality around an existing function or set of functions. In the provided information, the <code><strong>totp()</strong></code> function is described as a &quot;thin wrapper around the HOTP algorithm.&quot; This means that the <code><strong>totp()</strong></code> function uses the HOTP algorithm (implemented in the <code><strong>hotp()</strong></code> function) as a core component but adds some additional logic or convenience.</p><p id="77a9bceb-27e2-46b6-905e-ad449b1fe623" class="">In the case of TOTP (Time-based One-Time Password), it involves the concept of time intervals. The <code><strong>totp()</strong></code> function calculates the number of time intervals that have elapsed since a specific reference time (Unix epoch) and then passes this information, along with the secret key, to the HOTP function to generate the final TOTP value. The <code><strong>totp()</strong></code> function acts as a wrapper that incorporates time-based logic around the basic HOTP algorithm.</p><p id="b6325c3a-5aa1-4744-8ad2-a99346f85200" class="">In summary, HMAC is a specific cryptographic technique used for message authentication, and a wrapper function is a higher-level function that encapsulates and extends the functionality of another function (in this case, the HOTP algorithm).</p><p id="9d83b0a6-0958-4b00-a3f1-32fdb2a99576" class="">
+</p><ol type="1" id="e1f72fa6-9791-4365-87d3-decb761028bd" class="numbered-list" start="1"><li><strong>HOTP (hotp() function):</strong><ul id="62b900dd-94bf-46d4-96d9-4b8ae5b0e6ef" class="bulleted-list"><li style="list-style-type:disc"><strong>Input Parameters:</strong><ul id="36438335-ae03-4b90-95a8-6f7ca2587315" class="bulleted-list"><li style="list-style-type:circle">Base32-encoded secret key</li></ul><ul id="46a1130c-6a1a-4f45-b117-ebc945abfcb7" class="bulleted-list"><li style="list-style-type:circle">Counter (represents the number of time steps or iterations)</li></ul></li></ul><ul id="4d6d657e-0781-453a-a0ff-ee6a97506bae" class="bulleted-list"><li style="list-style-type:disc"><strong>Output:</strong><ul id="167ef4c5-3f59-4f09-b397-cf2815f5581e" class="bulleted-list"><li style="list-style-type:circle">6-digit HOTP value</li></ul></li></ul><ul id="df2e4b97-0001-40bf-a1b7-471ee8524917" class="bulleted-list"><li style="list-style-type:disc"><strong>Algorithm:</strong><ul id="12ac2bae-9700-49b2-8a92-204048d48c5e" class="bulleted-list"><li style="list-style-type:circle">Implements the HOTP algorithm as defined in RFC 2104: Section 5.</li></ul><ul id="4690d0ea-7664-4e8a-b054-89511565e3c2" class="bulleted-list"><li style="list-style-type:circle">Utilizes the <code><strong>hmac</strong></code> module for HMAC (Hash-based Message Authentication Code) computation.</li></ul></li></ul></li></ol><ol type="1" id="fc58cc50-ceab-4cea-b973-405e3a23bba2" class="numbered-list" start="2"><li><strong>TOTP (totp() function):</strong><ul id="4aca367c-9b8e-4c98-a94b-8acdf43ced5e" class="bulleted-list"><li style="list-style-type:disc"><strong>Input Parameters:</strong><ul id="a3ce2823-7fb9-4c65-8e07-5eb20761d6ff" class="bulleted-list"><li style="list-style-type:circle">Base32-encoded secret key</li></ul><ul id="a31a68a3-c242-4cec-aea3-6b2795249cc5" class="bulleted-list"><li style="list-style-type:circle">Time intervals (default is 30 seconds)</li></ul></li></ul><ul id="947faaa5-5f0a-4f11-9eca-be2a2dd1b09c" class="bulleted-list"><li style="list-style-type:disc"><strong>Output:</strong><ul id="93a35bd5-5b7f-486a-bef8-bbe96c8496ad" class="bulleted-list"><li style="list-style-type:circle">TOTP value</li></ul></li></ul><ul id="9bd780f8-16fa-4ee4-a4d9-2cd148b6846c" class="bulleted-list"><li style="list-style-type:disc"><strong>Algorithm:</strong><ul id="b343a50a-0a63-47b5-aef2-29841d9594d3" class="bulleted-list"><li style="list-style-type:circle">Wraps the HOTP algorithm.</li></ul><ul id="cb69be8d-032a-419e-933d-1cf1230b10da" class="bulleted-list"><li style="list-style-type:circle">Calculates the number of time intervals that have elapsed since Unix epoch.</li></ul><ul id="d4f8d992-0eb6-4b48-9936-38314f723409" class="bulleted-list"><li style="list-style-type:circle">Invokes the HOTP function with the secret key and the calculated counter.</li></ul></li></ul></li></ol><p id="9c65d86b-9055-40db-95a6-1ee6d096acd4" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2672ffc7-3a89-4e6a-8d1b-809e5a478222" class="code"><code class="language-Python">#!/usr/bin/env python3
+
+import base64
+import hmac
+import struct
+import sys
+import time
+
+def hotp(key, counter, digits=6, digest=&#x27;sha1&#x27;):
+key = base64.b32decode(key.upper() + &#x27;=&#x27; * ((8 - len(key)) % 8))
+counter = struct.pack(&#x27;&gt;Q&#x27;, counter)
+mac = hmac.new(key, counter, digest).digest()
+offset = mac[-1] &amp; 0x0f
+binary = struct.unpack(&#x27;&gt;L&#x27;, mac[offset:offset+4])[0] &amp; 0x7fffffff
+return str(binary)[-digits:].zfill(digits)
+
+def totp(key, time_step=30, digits=6, digest=&#x27;sha1&#x27;):
+return hotp(key, int(time.time() / time_step), digits, digest)
+
+def main():
+args = [int(x) if x.isdigit() else x for x in sys.argv[1:]]
+for key in sys.stdin:
+print(totp(key.strip(), *args))
+
+if **name** == &#x27;**main**&#x27;:
+main()</code></pre><p id="26a9062c-a56f-4bc7-88e8-cd2b0fb86cad" class="">
+</p><figure id="e728fc44-fc5a-4370-8c71-6d9c3a52659b" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%205.png"><img style="width:432px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%205.png"/></a></figure><p id="95fd77b7-9f82-4d50-b0a2-b25815fb32a5" class="">
+</p><figure id="6a18c1b5-8de2-4809-b15b-fbcba238079c" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%206.png"><img style="width:288px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%206.png"/></a><figcaption>QR Generated from the execution of TOTP file</figcaption></figure><p id="c0a9a4d8-56c0-437d-bef3-4e26e81da4dc" class="">
+</p><p id="fb6944d2-88cf-4c4f-959b-77158483a8f2" class="">
+</p><figure id="d89f283f-eea6-44b0-9879-a509da146aa3" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled.jpeg"><img style="width:240px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled.jpeg"/></a></figure><p id="0f9fae35-57ed-45b4-87ff-40a52ee7aa5f" class="">TOTP Verified in authenticator appication <code>Aegis</code> for both manual and QR-based TOTP authentication.</p><p id="6525a2eb-c9ef-4d85-b6d6-cf3483c6f7e8" class="">
+</p><p id="006f2c77-af5e-4835-ba9d-6226f2972bd1" class="">Exteded in MacOS or Linux, to enable various features</p><p id="421e3ad6-1ee9-43a2-8952-8f15a39a8da5" class=""><strong>From PyPI</strong></p><p id="506f03b9-c4c9-4367-9f37-e9ec3c4a0ca5" class=""><strong>From GitHub</strong></p><p id="d8c21d73-4cd9-4f69-8230-183518d784ee" class=""><strong>With Base32 Key</strong></p><p id="3cd68349-2667-4ab3-8cb9-b1d0e291d39b" class=""><strong>With QR Code</strong><div class="indented"><ol type="1" id="cc79260c-4feb-4e38-ab9e-2c697a9e73f4" class="numbered-list" start="1"><li>Install <code>zbarimg</code> to scan QR codes:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b0a618b4-dd9d-4a79-8227-9213c4378574" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># On macOS
+brew install zbar
+
+# On Debian, Ubuntu, etc.
+apt-get install zbar-tools</code></pre></li></ol></div></p><p id="b8947e15-a837-41fb-8216-9f76a981dd54" class=""><strong>Key  Protect with GPG</strong><div class="indented"><p id="564e23db-5536-4adc-b219-7a25bd4a8412" class=""><code>GPG (GNU Privacy Guard)</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0095e938-2a99-43a2-9313-1a5776355ac2" class="code"><code class="language-Python"># On macOS
+brew install gnupg
+# On Debian, Ubuntu, etc.
+apt-get update
+apt-get install gnupg</code></pre><p id="8ebd704d-5a68-4359-8e13-755baa03cf3b" class="">Enter the following command to ensure that GPG is installed.<div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="de544f52-3160-448e-89f7-b3dfdeeebdc5" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">gpg --version</code></pre></div></p></div></p><p id="6822d02f-de94-4988-bcd7-4373c96b4017" class="">
+</p><p id="38a7ac95-2fe9-4b34-a7c5-267594e6333e" class=""><strong>Encrypt Base32 Key With GPG</strong></p><p id="54b4a691-3bd7-4506-b0cb-03d5e7f395a4" class=""><strong>Encrypt QR Code With GPG</strong></p><p id="dd0490d2-9b54-41d3-b9e0-c686e67ba769" class=""><strong>Multiple Keys</strong></p><p id="11d47719-0f51-4e27-855c-97338e9f2a23" class=""><strong>Command Line Arguments</strong></p><p id="f1df2cd6-e2fd-4cc7-8e72-fb8e579e2cd6" class="">
+</p><p id="9f42d499-58ea-44c5-9fa4-f37e2e703c3e" class="">
+</p><h3 id="e0e69017-8553-4a15-b1e8-1a065949308a" class="">Drop #4</h3><p id="457a2a54-36ca-438f-97ab-9078be55090c" class="">
+</p><p id="a8b53f42-3cf9-4279-a547-b7c22f911b4f" class="">Modified the code to use a more secure hash function. Replace instances of <code><strong>&#x27;sha1&#x27;</strong></code> with <code><strong>&#x27;sha256&#x27;</strong></code> to use the SHA-256 hash function.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a80150a9-a287-4ed0-909b-49a8a8205f6f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">pythonCopy code
+# Replace instances of &#x27;sha1&#x27; with &#x27;sha256&#x27;
+def hotp(key, counter, digits=6, digest=&#x27;sha256&#x27;):
+    # (Same as before)
+
+def totp(key, time_step=30, digits=6, digest=&#x27;sha256&#x27;):
+    return hotp(key, int(time.time() / time_step), digits, digest)
+</code></pre><p id="ba5f05f4-810d-4f32-98a7-de38b7bbc602" class="">
+</p><p id="82270e2b-1818-408d-bb74-d531c12a8365" class="">
+</p><p id="b769e46b-69d7-4f22-8680-1141d888bda9" class="">Update in Java Script TOTP</p><p id="d91585f7-088b-4ddf-923e-31e09fc6b5a7" class="">
+</p><p id="d0e2c8fe-47a9-4fd5-9b82-3967746765f7" class="">UTF-8 stands for Unicode Transformation Format - 8 bits. It is a character encoding that represents each character in the Unicode character set with a variable number of 8-bit bytes. UTF-8 is widely used and can represent every character in the Unicode character set, making it a popular choice for encoding text in a way that supports internationalization.</p><p id="21343259-fe70-44e5-bc65-0658666037db" class="">In the context of the JavaScript code I provided, the <code><strong>utf-8</strong></code> argument in the <code><strong>fs.readFileSync</strong></code> method specifies the character encoding to be used when reading the file. It ensures that the content is interpreted as UTF-8, which is a common and widely supported character encoding.</p><ol type="1" id="98476b6a-d153-4389-a6c2-58ed75eb9bef" class="numbered-list" start="1"><li><strong>Added Debugging Statements:</strong><ul id="5c879a83-32ca-43c3-aa84-6d2ebf876f6c" class="bulleted-list"><li style="list-style-type:disc">Added <code><strong>console.log</strong></code> statements for debugging purposes. These statements will print useful information to the console, allowing you to track the flow of the program and observe variable values.</li></ul><ul id="d22d8bf1-72f0-4cd8-b4c4-1dffdc2ea75f" class="bulleted-list"><li style="list-style-type:disc">Note: Debugging statements can be removed or adjusted based on your specific debugging needs.</li></ul></li></ol><ol type="1" id="795f31a1-568c-460c-b0cf-dc36513c6450" class="numbered-list" start="2"><li><strong>Handling File Read Errors:</strong><ul id="8552e954-e875-4cdb-a1f7-602811c2897a" class="bulleted-list"><li style="list-style-type:disc">Wrapped the file reading operation in a try-catch block to handle potential errors when reading the secret file.</li></ul></li></ol><p id="87e2f2ef-1394-4c85-bc1d-a1ccc7c07d21" class="">
+</p><h3 id="550d39a1-e5b3-4c67-9613-293ffec8191b" class="">Drop #5</h3><p id="99c6ad00-1feb-4238-940d-1b6e8128c5da" class="">
+</p><p id="b455d6d8-bc37-43ab-b532-8044510966bd" class="">Implementing React as front-end framework with Firebase Authentication.</p><figure id="67a7a151-f2c3-4ff2-8097-5b56b831b252" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%207.png"><img style="width:432px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%207.png"/></a></figure><p id="697c39c7-0b43-4ecc-89a6-5283fa25ec0f" class="">
+</p><h3 id="3187eaf3-9a01-4914-a075-afea11cb9a84" class="">Project Goal:</h3><p id="aa911edc-ba8e-4498-9d1b-b4e7e9760f0d" class="">To enable <strong>Multi-Factor Autherization</strong> on a website hosted on Firebase with a <strong>Monolithic Architechure </strong>to connect and sync the frontend <strong>React Framework</strong> to the backend <strong>Python / npm </strong>server. The website will be <strong>HTTPS-enabled </strong>with verified <strong>SSL </strong>cert, and monitored by Session ID/Token through <strong>JWT </strong>or <strong>OAuth</strong>. As soon as the user loads the website, the landing page is booted up, which shows the Initial Registration / Login page, now in the case of Registration, the user is prompted to enter Name, Email, Strong Password ( 8 digit with special characters ) with pass-phrase support and denial of entry if password too simple or is found in the <strong>RockYou </strong>Breach. Further more, the website should support usage usage of password managers like <strong>BitWarden </strong>or <strong>NordPass,</strong> as it generates much secure password and makes it easier for the user to remember the password. The Registration part is done manually, but it should also support Social Login in <strong>SSO </strong>like Google or GitHub. Once the landing page is done and verified, They move on to the common OTP via Email/SMS page, where they’ll be sent a 6-digit OTP to their accounts, as a additional security feature, the website should encorporate a <strong>CAPTCHA </strong>test to filter bots or spam amongst other attacks. It can either be <strong>reCAPTCHA</strong>, a free version from Google or something similar. This page of Authentication is purely monitored in firebase right from initail OTP generation to storing of user data in the <strong>in-built firebase database</strong>. The page also includes the option to re-send OTP or re-enter Email like any other production website, with a time-limit for entering the OTP. Now, after the user enters the OTP, the system checks the backend server and matches the OTP to verify the user once again. In detail, user enters the OTP on the client side, ntered OTP is transmitted securely to the server over HTTPS, server calculates the expected OTP using the stored seed and the current time or counter (depending on the algorithm used) like <strong>SHA-256</strong>, compare with the entered OTP to verify. Lastly, the users lands on the TOTP page, the user will be shown either a <strong>QR </strong>or secret code in text, which when put in an authenticator application of the user’s choice with be provided with the <strong>TOTP</strong>. Once all the user passes all 3 authentication pages, a successful login message will be displayed. The user can log out manually, or the Session ID logs the users automatically after a period of no usage. <strong>User Account Recovery,</strong> commonly known as the forgot password?<strong> </strong>option should be available in case the user forgets the password<strong>. </strong>More focus on the UI, once the functionality of the site is done and tested. </p><p id="4bfd11de-631c-41c6-b10f-be5a27dd1e23" class="">
+</p><p id="e8dce75e-5e3a-4e21-becb-54eeedd073bb" class="">
+</p><p id="52d1611a-2177-42d0-849e-dee0a7adeaad" class="">
+</p><p id="12f6ee8b-208c-4cb7-afb8-1643a2fd4fae" class="">
+</p><p id="7df2f84f-8d9a-4e93-b9d4-c8bbf22247d6" class="">
+</p><p id="9770d824-c446-4df6-a767-10f2dcc23dca" class="">
+</p><h2 id="74d621b0-1b33-40d1-ad3f-20ab45405451" class="">Monolithic Website</h2><p id="e4fb93bd-db5d-40a3-939f-f45441cf4058" class="">A monolithic website is a type of software architecture where all the components and modules of the application are tightly interconnected and interdependent. In the context of a monolithic website:</p><h3 id="5e9551aa-0810-46e3-a2e1-f62835fbcecd" class=""><strong>Characteristics of a Monolithic Website:</strong></h3><ol type="1" id="ed36eccb-118f-4915-b5b1-68db58f52640" class="numbered-list" start="1"><li><strong>Single Codebase:</strong><ul id="ac1de057-8432-451b-bc32-f50921de8348" class="bulleted-list"><li style="list-style-type:disc">The entire application, including its various functions and features, is developed as a single codebase.</li></ul></li></ol><ol type="1" id="8b687d6f-8d3f-49a8-ae46-14a079a8f9c4" class="numbered-list" start="2"><li><strong>Tight Integration:</strong><ul id="9c19c055-8a30-43a9-8bd8-803f5ce21eb6" class="bulleted-list"><li style="list-style-type:disc">All components (such as frontend, backend, and database) are tightly integrated, typically within a single executable or deployable unit.</li></ul></li></ol><ol type="1" id="e43b0a02-b09f-474d-bdcc-920ac42f7b77" class="numbered-list" start="3"><li><strong>Single Deployment:</strong><ul id="568bfed5-db9c-4cda-9744-d147d6c5d4fc" class="bulleted-list"><li style="list-style-type:disc">The entire application is deployed as a single unit. Updates and changes to any part of the application require deploying the entire monolith.</li></ul></li></ol><ol type="1" id="8cb5ab49-441f-4e3b-a5f9-6195f7e90089" class="numbered-list" start="4"><li><strong>Shared Database:</strong><ul id="cdd86083-3758-4d5c-be0b-91e204f35d16" class="bulleted-list"><li style="list-style-type:disc">A monolithic website often uses a single, shared database to store all its data.</li></ul></li></ol><ol type="1" id="0a40f35a-436f-4c10-b4cd-13c5a84af3d2" class="numbered-list" start="5"><li><strong>Simple Development Model:</strong><ul id="93b219c5-52dd-447a-972e-87ab98ec3289" class="bulleted-list"><li style="list-style-type:disc">The development model is straightforward, as there&#x27;s only one codebase to manage and deploy.</li></ul></li></ol><h3 id="74875252-e6da-4d1a-add5-1625f2ded4c6" class=""><strong>Use Case in TOTP Implementation:</strong></h3><p id="4402b1a5-6f97-457d-9c33-12b03fd4af64" class="">In the context of implementing Time-based One-Time Password (TOTP) functionality in a monolithic website:</p><ol type="1" id="bd6d5bbc-83eb-400c-ad11-2607053f6ccb" class="numbered-list" start="1"><li><strong>Module Integration:</strong><ul id="b1274627-c177-4083-a73a-56971add6ef1" class="bulleted-list"><li style="list-style-type:disc">The TOTP generation and verification logic can be integrated into the existing codebase as a module or service within the monolith.</li></ul></li></ol><ol type="1" id="9e67a850-c73c-4d3a-9693-f59bb8dc830b" class="numbered-list" start="2"><li><strong>Shared Resources:</strong><ul id="24acda56-a01e-4f84-b061-f3f551965543" class="bulleted-list"><li style="list-style-type:disc">The TOTP functionality can share resources (such as databases, user management) with other parts of the application since they are all part of the same monolithic structure.</li></ul></li></ol><ol type="1" id="b5ec0b66-b67d-4900-a114-b6aa71bb5e8c" class="numbered-list" start="3"><li><strong>Simplicity:</strong><ul id="6a8f5595-2f0b-4134-bf7b-f44133630d27" class="bulleted-list"><li style="list-style-type:disc">For smaller applications or those with simpler requirements, a monolithic architecture might be more straightforward to implement and maintain.</li></ul></li></ol><ol type="1" id="f18885cd-aa5c-4340-a7a0-13ad22c7c980" class="numbered-list" start="4"><li><strong>Single Deployment Unit:</strong><ul id="c933cd05-0bec-48f4-94cf-59e370be4722" class="bulleted-list"><li style="list-style-type:disc">TOTP updates or changes can be deployed alongside other updates in a single deployment unit.</li></ul></li></ol><ol type="1" id="ffeb4c84-e3c1-475f-bd02-2582f215f3c9" class="numbered-list" start="5"><li><strong>Development Ease:</strong><ul id="752f966a-1347-4114-a6eb-f89ffa7339b7" class="bulleted-list"><li style="list-style-type:disc">A monolithic approach might be simpler and faster to develop, especially if the website does not have complex scalability or independence requirements.</li></ul></li></ol><h3 id="b4bacee3-aa90-4ed2-a090-59acaa9a4b3e" class=""><strong>Considerations:</strong></h3><ul id="3c809084-e502-4af0-81c2-7bd425142cc2" class="bulleted-list"><li style="list-style-type:disc"><strong>Scalability Challenges:</strong><ul id="decb38a3-5258-476c-b164-f01af536b653" class="bulleted-list"><li style="list-style-type:circle">Monolithic architectures may face challenges in scaling individual components independently. If one part of the application requires more resources, you may need to scale the entire monolith.</li></ul></li></ul><ul id="bf883e64-f144-41db-9b6b-f005300266b8" class="bulleted-list"><li style="list-style-type:disc"><strong>Flexibility:</strong><ul id="fb32d2c9-b69e-4839-be92-8ee7ab1c4631" class="bulleted-list"><li style="list-style-type:circle">Changes to one part of the application may affect the entire monolith. This can be a limitation in scenarios where flexibility and independence of components are crucial.</li></ul></li></ul><ul id="40a1557c-2abe-4662-afa5-4e97aed4a642" class="bulleted-list"><li style="list-style-type:disc"><strong>Maintenance:</strong><ul id="4e9ad5f3-104e-4c30-9970-3a4055afbbbd" class="bulleted-list"><li style="list-style-type:circle">Maintenance tasks, such as debugging or updating, may be more complex in a monolithic codebase.</li></ul></li></ul><ul id="55ea2b33-a4fe-42e5-8707-c50c2bcc8f95" class="bulleted-list"><li style="list-style-type:disc"><strong>Future Growth:</strong><ul id="1b85ba82-faac-4a85-bd4a-33338653ddf7" class="bulleted-list"><li style="list-style-type:circle">Consider whether your website is likely to grow in complexity and scale. If so, you might need to evaluate the trade-offs and consider whether a microservices architecture would be more suitable in the long run.</li></ul></li></ul><p id="546b5358-9d12-4bd3-a55d-94eabb5edb56" class="">In summary, a monolithic website integrates all its components into a single, tightly-coupled unit. For TOTP implementation, a monolithic approach can be suitable for simpler applications where scalability and component independence are not critical considerations. However, if your website is expected to grow in complexity and scale, a microservices architecture might be a more scalable and flexible choice.</p><p id="32a1c76e-f8bb-4799-9ca5-a2e7bb6020eb" class="">
+</p><h3 id="001fe249-1cf9-4232-9c9d-b0466280845b" class="">Drop #6</h3><p id="174500ae-09f0-4424-aa6c-91dc019cd680" class="">16012024</p><p id="f8eab25b-0bed-48a2-ad80-7ae355966a0d" class="">
+</p><p id="ddba1620-0cb3-4887-b851-827e51c79c7e" class="">Playing around with Realtime database in Firebase, seems like when the web application is generated, the database URL doesn’t show up in the config SDK, working to see how to enable it. The older versions of firebase web applications comes pre-configured with the database URL, likely them!</p><p id="ceabbbd8-9763-46d9-8a49-0cdbfab778b1" class="">
+</p><p id="99fe1d2d-87c7-46df-b207-89848298e318" class=""><strong><strong>Content Security Policy (CSP) Header</strong></strong></p><figure id="c3ed6bd7-c9f1-4c57-b28d-765d8c06d478" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%208.png"><img style="width:528px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%208.png"/></a></figure><p id="bcc5d69e-2269-474e-ab7b-86ab47142488" class="">
+</p><p id="cc3b4ab9-1c57-4777-8e48-3fd701a20a2c" class=""><strong>CDN Edge Server</strong></p><p id="3df08d29-330e-4e3e-8bb1-37928c2ab399" class="">A <a href="https://www.cloudflare.com/learning/cdn/what-is-a-cdn/">CDN</a> edge server is a computer that exists at the logical extreme or “<a href="https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/">edge</a>” of a network. An edge server often serves as the connection between separate networks. A primary purpose of a CDN edge server is to store content as close as possible to a requesting client machine, thereby reducing <a href="https://www.cloudflare.com/learning/performance/glossary/what-is-latency/">latency</a> and improving page load times.</p><p id="a3478fd3-2b15-4056-a17a-8ec0af5f19bd" class="">An edge server is a type of edge device that provides an entry point into a network. Other edges devices include routers and routing switches. Edge devices are often placed inside <a href="https://www.cloudflare.com/learning/cdn/glossary/internet-exchange-point-ixp/">Internet exchange points (IxPs)</a> to allow different networks to connect and share transit.</p><p id="518f11aa-8c11-4b05-9ed4-47fcbf87fa23" class="">
+</p><p id="c9b03f60-f855-4460-81d5-120fe231ff2b" class="">Went a bit into file formatting and compressions like <strong>gzip </strong>or <strong>brotli.</strong></p><p id="1edef455-dbe2-453f-885c-c308fd8e9714" class="">
+</p><p id="621d8ab9-27d8-4cb1-89a8-a2a6f6f1e5d8" class="">The <strong>Firebase Realtime Database</strong> is a cloud-hosted database. Data is stored as JSON and synchronized in realtime to every connected client. When you build cross-platform apps with our Android, Apple platforms, and JavaScript SDKs, all of your clients share one Realtime Database instance and automatically receive updates with the newest data.</p><p id="ffd91365-3634-4373-8fcb-d215f9cce5df" class="">
+</p><p id="8459a26f-4808-425a-827b-d8f9491021ee" class="">All Firebase Realtime Database data is stored as JSON objects. You can think of the database as a cloud-hosted JSON tree. Unlike a SQL database, there are no tables or records. When you add data to the JSON tree, it becomes a node in the existing JSON structure with an associated key. You can provide your own keys, such as user IDs or semantic names, or they can be provided for you using <a href="https://firebase.google.com/docs/reference/js/database?authuser=0#push"><code>push()</code></a>.</p><p id="7a38f5ac-db6c-43a5-8d01-444400106fb3" class="">
+</p><p id="520c1338-3745-498c-b8cf-b711432d26a1" class="">If you create your own keys, they must be UTF-8 encoded, can be a maximum of 768 bytes, and cannot contain <code><strong>.</strong></code>, <code><strong>$</strong></code>, <code><strong>#</strong></code>, <code><strong>[</strong></code>, <code><strong>]</strong></code>, <code><strong>/</strong></code>, or ASCII control characters 0-31 or 127. You cannot use ASCII control characters in the values themselves, either.</p><p id="7f9a74d2-b910-4054-88ec-0b25dbb20a4b" class="">
+</p><p id="5c4d35ae-a087-4c16-8e77-cabd67de6e21" class="">A typical user profile is located at a path, such as <code>/users/$uid</code>. The user <code>alovelace</code> might have a database entry that looks something like this:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="79f2d1b3-feb4-4898-a645-d0d2ebd8e97b" class="code"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;users&quot;: {
+    &quot;alovelace&quot;: {
+      &quot;name&quot;: &quot;Ada Lovelace&quot;,
+      &quot;contacts&quot;: { &quot;ghopper&quot;: true },
+    },
+    &quot;ghopper&quot;: { ... },
+    &quot;eclarke&quot;: { ... }
+  }
+}</code></pre><p id="62d657a5-38f7-4f40-85d2-660af5f2dbc8" class="">Although the database uses a JSON tree, data stored in the database can be represented as certain native types that correspond to available JSON types to help you write more maintainable code.</p><p id="e051071b-0dd1-4fa6-9d24-c58a49e5e74f" class="">
+</p><p id="8759227f-9c2d-4515-be06-b04522d451d9" class=""><strong>Hosting a website in Firebase</strong></p><p id="d3978d87-0e9d-4b16-9b62-9cd485c233ef" class="">
+</p><p id="96580169-d4c6-4d3f-8617-984c20807322" class="">
+</p><p id="d6924258-8ade-4145-8aca-51b98e7cd76d" class=""><strong>Firebase free tier (called the Spark Plan)</strong></p><p id="c7d2056d-b060-4da2-95bc-d0b72700ef62" class="">Create Project</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="80c87b1b-c5b8-4bc8-97ac-e33314ce857b" class="code"><code class="language-Bash">npm install -g firebase-tools
+firebase login</code></pre><figure id="c9227d4c-e69e-49fc-a959-52b99e54756a" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%209.png"><img style="width:480px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%209.png"/></a></figure><p id="7d9e7bac-be1f-491e-9ff5-41dac1f25bf0" class="">
+</p><p id="4821c77f-f638-4037-8904-3c14ab828d2e" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6cea9f23-d769-4c99-9b4b-7c444af42a71" class="code"><code class="language-Bash">firebase init hosting</code></pre><p id="468701cd-7e06-41f6-98fb-c4c6b99d27ab" class="">
+</p><p id="b9808d5f-b006-4708-8549-f4ee0afff2fd" class="">
+</p><figure id="fc6942b7-4177-48b2-b039-7324122f8736" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2010.png"><img style="width:863px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2010.png"/></a></figure><p id="8927f6d8-e9fd-4e49-82b0-b90236f23ef5" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d95b82f7-29db-4709-a3de-5162e339385c" class="code"><code class="language-Bash">firebase serve</code></pre><p id="d62368e5-65d7-4e86-bcde-0a231cd2abfd" class="">
+</p><figure id="92817eeb-0b3f-4e67-8278-4a3437207658" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2011.png"><img style="width:752px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2011.png"/></a></figure><p id="3cbb735e-3678-40cf-9594-6e21b5546434" class="">
+</p><p id="00618529-8840-4dcd-835e-c266a06dfa57" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="aa534775-e2f8-4a23-be8a-5360d99f3c6b" class="code"><code class="language-Bash">firebase deploy</code></pre><p id="11eb83f2-e2e7-4f3f-b932-24da9b262d29" class="">
+</p><figure id="9f316b07-8f1b-4e76-ba5b-1f9d7ed84ea7" class="image"><a href="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2012.png"><img style="width:748px" src="Multi-Factor%20Authentication%20%5BMFA%5D%20f8b7b4db6fc0451da2f8170b30277636/Untitled%2012.png"/></a></figure><p id="9e767683-6ee5-4659-8882-ea50175cfdc5" class="">
+</p><p id="3996ee48-31bc-46fd-bd99-2434f29b8fd0" class="">
+</p><p id="5be69398-450d-4099-ac62-a23e82b9c4e6" class="">
+</p><p id="ca25f873-549a-4807-a91f-4cd7a123a730" class="">
+</p><p id="334b3427-32a5-43cc-b8f2-f72f945c3ca9" class="">
+</p><p id="b6251358-c11c-49f0-9d1c-7cff3892989a" class="">
+</p><p id="5eb136ff-ee35-4f5b-96fb-2d5a0d6b63ae" class="">
+</p><p id="199d845b-de76-48dc-8bde-6d403fd48797" class="">
+</p><p id="9cf0a066-d576-467c-8c88-34554f96ee04" class="">
+</p><p id="0216c57d-ae5c-4741-a2b5-a1da7a1cd420" class="">
+</p><p id="0c5e8896-47c7-4674-971e-46f860a2a819" class="">Learn:</p><p id="6146e733-8b93-4c64-816c-3429ada5656c" class=""> Complete Overview of Firebase and it’s working.<div class="indented"><p id="3d8e58f7-5537-4608-9dec-03e7deaec10a" class="">Firebase Hosting in detail.<div class="indented"><p id="46387382-8d3f-4a04-94f8-3602beb29ac2" class="">Hosting with Dynamic files and Micro-services.</p><p id="53b2c039-291c-48bb-b41f-364abec87f13" class="">Example Website hosting with Firebase.</p></div></p></div></p><p id="95d26c36-5044-4616-af35-913f44ec011f" class="">React Framework</p><p id="5aef264a-fb3c-4f97-9b44-1b2fbfab76c0" class="">GitHub Actions and Workflows</p><p id="c0370fce-a111-456b-a676-1ce27f2a61b6" class="">
+</p><p id="86bed994-642b-4b54-ab80-5f26037cf941" class="">
+</p><p id="1973c14b-994c-4145-8138-c74f91f689ce" class="">
+</p><p id="8882e261-fd9a-48fd-b387-b2bc519692ab" class="">
+</p><p id="e67041c1-c2ac-4cd8-a267-9d8a14334835" class="">
+</p><p id="87f48c30-c75b-42d0-9b98-2464cec37f5d" class="">
+</p><p id="74875c98-15fe-4ac9-9273-4665f68bbb54" class="">
+</p><p id="003490e8-b9d8-4be5-abe8-2d2b26e7d0d5" class="">
+</p><p id="7c8057c3-3487-4254-9517-afad95659359" class="">
+</p><p id="d671b1f6-2f0a-44f9-9f3c-8357d3ed5458" class="">TODO:</p><p id="5221bace-8f09-4d2e-9b99-ad7ffd309bd6" class="">
+</p><p id="7968cbf8-9083-48d4-806a-160d551fad30" class="">Implement Database for storing of TOTP secret-code along with user credentials.</p><p id="ea64696d-c1a8-40d1-85c7-3847e127401b" class="">Avoid posting of secret-code more than once.</p><p id="07e38e9c-0971-4ab7-b85a-0f0fe5cf25c3" class="">Return JWT in case of true in TOTP-Validate method.</p><p id="62a927bb-de07-4ca0-b0c4-7c052597fdfd" class="">
+</p><p id="55aea4ab-e321-43cc-bd3a-9feb5b6da57e" class="">
+</p><p id="1da79b01-8a2a-4883-9773-ff1e00cb4038" class="">
+</p><p id="18e3c0c7-28c8-46de-89d6-8350c29ab7da" class="">
+</p><p id="11651887-89fb-4a0c-b31f-42794d99b932" class="">
+</p><p id="d47bb6e4-4006-49db-914e-4f691395503b" class="">
+</p><p id="910f7a18-f3d2-42dc-9b4f-5c4b5ffa5959" class="">
+</p><p id="636ebb82-bcc9-494c-951f-7670ecfbb00f" class="">
+</p><p id="996be748-e64e-46df-b63e-8e4f2db9accd" class="">
+</p><p id="fd53a3dd-166e-41ff-99e0-5cd6be560cbf" class="">
+</p><p id="7a4a3f51-90d5-47d3-90d4-982443d1929f" class="">
+</p><p id="c11e3820-d1c1-4c7d-8cf3-3a07f486556b" class="">
+</p><p id="4ae57c10-86ac-42de-a563-7dc1e3bbdcce" class="">
+</p><p id="9e66d819-df6b-4994-afde-6c64446899fd" class="">
+</p><p id="5c831732-b19c-45f7-9a0b-7ba17c7a8f7b" class="">
+</p><p id="50235042-f1fa-421f-ba82-a14f2b1cbd35" class="">
+</p><h3 id="cc9bb9b3-5529-41cc-b230-a5622dd69826" class="">References</h3><p id="6fc9a25b-72ff-4346-aa43-dfb521e860ce" class=""><a href="https://chat.openai.com/">https://chat.openai.com/</a></p><p id="4d0e9db1-d9c2-4f7f-8c17-c8268d58a821" class=""><a href="https://en.wikipedia.org/wiki/Multi-factor_authentication">https://en.wikipedia.org/wiki/Multi-factor_authentication</a></p><p id="f1f26bc2-4e06-4ceb-b5d9-06be0686b052" class=""><a href="https://youtu.be/iXSyxm9jmmo?si=QitWWB9OGgDDl0Hp">https://youtu.be/iXSyxm9jmmo?si=QitWWB9OGgDDl0Hp</a></p><p id="9959230a-9317-4443-aa2c-541313f1a4b4" class="">
+</p><p id="784cbc06-87f1-46f3-8a46-1cb2b901d126" class=""><a href="https://www.youtube.com/watch?v=7Q17ubqLfaM">https://www.youtube.com/watch?v=7Q17ubqLfaM</a></p><p id="f914eeb3-8b60-4fda-b9a6-a93aa2ea2359" class=""><a href="https://www.youtube.com/watch?v=mbsmsi7l3r4">https://www.youtube.com/watch?v=mbsmsi7l3r4</a></p><p id="e11bea75-5a71-4fc8-a8d4-e9132d897149" class=""><a href="https://www.youtube.com/watch?v=KYgLJvW2Yb0">https://www.youtube.com/watch?v=KYgLJvW2Yb0</a></p><p id="4d6e5c12-7705-40b1-82a6-85a30b62c64b" class=""><a href="https://www.youtube.com/watch?v=KQya9i6czhM">https://www.youtube.com/watch?v=KQya9i6czhM</a></p><figure id="cc672a9d-e6c4-4743-b90a-7ed8558b6e56"><div class="source">https://github.com/jkithome/2fa-speakeasy-example</div></figure><figure id="fb9237f9-b2f2-4a7d-915a-8aa4cc121c9e"><div class="source">https://github.com/ShekMak/firebase-mfa</div></figure><p id="b3ccc81f-9500-4ec0-95cc-d31333832755" class=""><a href="https://www.youtube.com/watch?v=9kRgVxULbag">https://www.youtube.com/watch?v=9kRgVxULbag</a></p><p id="9517bbab-17ac-4ac7-9b5f-28c793687428" class=""><a href="https://www.youtube.com/watch?v=q5J5ho7YUhA">https://www.youtube.com/watch?v=q5J5ho7YUhA</a></p><p id="5cf2f8b9-7b12-46b1-82ae-e7498598549d" class=""><a href="https://www.youtube.com/watch?v=46AKWNOJ3-Y">https://www.youtube.com/watch?v=46AKWNOJ3-Y</a></p><figure id="443d14c5-5c0f-4664-8fba-b277943d9e5c"><a href="https://github.com/TEAM-CENTINEL/MFA_Implementation?tab=GPL-3.0-1-ov-file" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - TEAM-CENTINEL/MFA_Implementation: from base implementation of MFA</div><div class="bookmark-description">from base implementation of MFA . Contribute to TEAM-CENTINEL/MFA_Implementation development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/fluidicon.png" class="icon bookmark-icon"/>https://github.com/TEAM-CENTINEL/MFA_Implementation?tab=GPL-3.0-1-ov-file</div></div><img src="https://opengraph.githubassets.com/adeb788bcb7a5aa17c8bd9f262ddf046beb5845ccc303aac24717fa34e8f054b/TEAM-CENTINEL/MFA_Implementation" class="bookmark-image"/></a></figure><p id="95e5fb69-6852-4e0e-9896-2f03f2ade50c" class=""><a href="https://medium.com/@puran.joshi307/2-factor-authentication-using-totp-a9f1ff1e0b1a">https://medium.com/@puran.joshi307/2-factor-authentication-using-totp-a9f1ff1e0b1a</a></p><p id="4741d6d4-bfe0-4012-86a6-e3dfb3874912" class=""><a href="https://datatracker.ietf.org/doc/html/rfc6238">https://datatracker.ietf.org/doc/html/rfc6238</a></p><p id="99ef4c14-417a-4d2c-8013-b320983424b9" class=""><a href="https://en.wikipedia.org/wiki/HMAC">https://en.wikipedia.org/wiki/HMAC</a></p><p id="3c6112f5-26fe-4cc6-9795-77ec92ac522c" class=""><a href="https://datatracker.ietf.org/doc/html/rfc4226">https://datatracker.ietf.org/doc/html/rfc4226</a></p><figure id="c80718b5-6915-4ab9-884d-b576247d7049"><div class="source">https://github.com/susam/mintotp</div></figure><p id="1e3bd488-fc8a-4b39-bddd-cddb43c0af51" class=""><a href="https://youtu.be/Yv5tZu5wAU0?si=wrfLGWdAHGROpidV">https://youtu.be/Yv5tZu5wAU0?si=wrfLGWdAHGROpidV</a></p><p id="fe0e02e2-2239-4cf1-bf3a-6dd7d5f54ea6" class="">
+</p></li></ol></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        #name-container {
+            position: absolute;
+            text-align: center;
+            padding: 20px;
+            transform: translate(-50%, -50%); /* Center the container */
+            top: 50%;
+            right: 40%;
+        }
+
+        #name {
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background-color: #fff;
+            display: inline-block;
+        }
+
+        #nameInputContainer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+            padding: 20px;
+        }
+
+        #nameInput {
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #changeNameBtn {
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="name-container">
+        <div id="name">Your Name</div>
+    </div>
+    <div id="nameInputContainer">
+        <input type="text" id="nameInput" placeholder="Enter new name">
+        <button id="changeNameBtn">Change Name</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get elements
+            const nameElement = document.getElementById('name');
+            const nameInput = document.getElementById('nameInput');
+            const changeNameBtn = document.getElementById('changeNameBtn');
+
+            // Change name function
+            function changeName() {
+                const newName = nameInput.value.trim();
+                if (newName !== '') {
+                    nameElement.textContent = newName;
+                    nameInput.value = ''; // Clear the input field
+                }
+            }
+
+            // Event listener for the button click
+            changeNameBtn.addEventListener('click', changeName);
+        });
+    </script>
+</body>
+</html>
+
