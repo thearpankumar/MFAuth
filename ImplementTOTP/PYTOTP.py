@@ -69,7 +69,7 @@ if __name__ == '__main__':
     choice = int(input("Enter your choice : "))
     if choice == 1:
         TOTP_value = totp_instance.current_time_totp(secret_key)
-        print(TOTP_value)
+        print(f" Your OTP value is {TOTP_value}")
     elif choice == 2:
         counter = 0
         otp = int(input("Enter your OTP : "))
