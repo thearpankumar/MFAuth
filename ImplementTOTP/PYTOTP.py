@@ -73,7 +73,7 @@ if __name__ == '__main__':
     elif choice == 2:
         counter = 0
         otp = int(input("Enter your OTP : "))
-        while otp in totp_instance.get_multiple_totp_values():
+        while otp in totp_instance.get_multiple_totp_values(secret_key):
             print("otp is correct for authentication .")
             counter += 1
             if counter == 5:
